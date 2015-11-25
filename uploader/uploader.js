@@ -1,23 +1,3 @@
-/**
-<input type="file" id="upload" />
-<script>
-require.async('upload', function(Upload){
-    new Upload({
-        dom: '#upload',
-        uploader: '/test/1.json',
-        width: 100,
-        height: 100,
-        buttonText: '编辑头像',
-        swf: '/js/web/common/mod/upload/upload.swf',
-        fileTypeExts: '*.jpg;*.jpeg;*.png;*.JPG;*.JPEG;*.PNG',
-        onUploadSuccess: function(){
-            console.log(arguments);
-        }
-    });
-});
-</script>
-*/
-
 //自动获取swf的地址
 (function(){
 var doc = document, currentScript;
