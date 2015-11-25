@@ -1,0 +1,10 @@
+.ui2-mask{
+    position: absolute;
+	padding: 0px;
+    top: 0px;
+    left: 0px;
+    background: #000;
+    opacity: 0.6;
+	filter: alpha(opacity=60);
+    z-index: 10000;
+}

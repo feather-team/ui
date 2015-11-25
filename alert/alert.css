@@ -1,0 +1,43 @@
+.ui2-alert{
+	font-size: 14px;
+	text-align: center;
+	padding: 20px;
+}
+
+.ui2-alert-button-cancel, .ui2-alert-button-cancel:hover{
+	background: #ebebeb !important;
+	color: #333 !important;
+}
+
+.ui2-alert-success, .ui2-alert-error, .ui2-alert-warn{
+    padding: 10px 20px 10px 50px;
+    background-image: url('./images/success.png');
+    background-position: 15px center;
+    background-repeat: no-repeat;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.ui2-alert-success, .ui2-alert-error, .ui2-alert-warn{
+	*display: inline;
+	padding: 15px 20px 15px 70px;
+    background-position: 15px center;
+}
+
+.ui2-alert-error{
+    background-image: url('./images/error.png');
+    background-position: 25px center;
+}
+
+.ui2-alert-warn{
+	background-image: url('./images/warn.png');
+}
+
+.ui2-alert-success{
+	background-image: url('./images/success.png');
+}
+
+.ui2-alert{
+	font-size: 20px;
+}

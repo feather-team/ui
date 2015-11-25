@@ -1,0 +1,30 @@
+.ui2-suggestion{
+	position: absolute;
+	border: 1px solid #ccc;
+	background: white;
+	display: none;
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+	z-index: 10000;
+}
+
+.ui2-suggestion-item, .ui2-suggestion-header, .ui2-suggestion-footer{
+	display: block;
+	text-indent: 5px;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	text-decoration: none;
+	color: #333;
+}
+
+.ui2-suggestion-item:hover, .ui2-suggestion-active{
+	background: #eee;
+	cursor: pointer;
+}
+
+.ui2-suggestion-header, .ui2-suggestion-footer{
+	color: #0090e0;
+	display: none;
+}

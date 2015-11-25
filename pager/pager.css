@@ -1,0 +1,48 @@
+.ui2-pager{
+	margin:5px auto;
+	float: right;
+}
+
+.ui2-pager li{
+	list-style: none;
+	float: left;
+	border: 1px solid #E6E6E6;
+	background-color: #fff;
+	margin-left: 5px;
+	height: 28px;
+	line-height: 28px;
+	font-family: verdana, "微软雅黑";
+	font-size: 12px;
+}
+
+.ui2-pager li:hover{
+	border-color: #ff5f08;
+}
+
+.ui2-pager li.ui2-pager-point{
+	border-color: #fff !important;
+}
+
+.ui2-pager li a{
+	font-family: verdana, "微软雅黑";
+	font-size: 12px;
+	display: block;
+	padding: 0px 11px;
+	text-align: center;
+	color: #666;
+	height: 28px;
+	line-height: 28px;
+	text-decoration: none;
+}
+
+.ui2-pager .ui2-pager-current{
+	padding: 0px 12px;
+	text-align: center;
+	background: #F5692F;
+	color: white;
+	border-color: #ff5f08;
+}
+
+.ui2-pager .ui2-pager-previous, .ui2-pager .ui2-pager-next{
+	background: #fff;
+}

@@ -1,0 +1,11 @@
+.ui2-placeholder{
+	position: absolute !important;
+	font-size: 12px !important;
+	color: #aaa !important;
+	border: 0px !important;
+	padding: 0px !important;
+	margin: 0px !important;
+	text-indent: 5px !important;
+	display: inline-block;
+	background: transparent !important;
+}

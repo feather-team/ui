@@ -1,0 +1,93 @@
+.ui2-droplist{
+	border: 0px;
+	min-width: 80px;
+	display: inline-block;
+	height: 28px;
+	border: 1px solid #ccc;
+	position: relative;
+	background: white;
+	cursor: pointer;
+	text-align: left;
+}
+
+.ui2-droplist-open{
+	border: 1px solid #f5692f;
+	border-bottom: 0px;
+}
+
+.ui2-droplist-arrow{
+	width: 0;
+	height: 0;
+	border: 5px solid transparent;
+	border-top: 5px solid #f5692f;
+	border-bottom: 0;
+	position: absolute;
+	top: 11px;
+	right: 5px;
+	display: block;
+}
+
+.ui2-droplist-open .ui2-droplist-arrow{
+	border-bottom: 5px solid #f5692f;
+	border-top: 0px;
+}
+
+.ui2-droplist-list{
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+	top: 28px;
+	left: -1px;
+	min-width: 80px;
+	display: none;
+	max-height: 200px;
+	position: absolute;
+	border: 1px solid #f5692f;
+	border-top: 0px;
+	border-bottom-width: 4px;
+	overflow-y: auto;
+	background: white;
+	overflow-x: hidden;
+}
+
+.ui2-droplist-open .ui2-droplist-list{
+	display: block;
+}
+
+.ui2-droplist-select, .ui2-droplist-item a, .ui2-droplist-group-label{
+	white-space: nowrap;
+	line-height: 28px;
+	display: block;
+	color: #666;
+	font-size: 12px;
+}
+
+.ui2-droplist-select{
+	overflow: hidden;
+	padding-left: 5px;
+	margin-right: 20px;
+}
+
+.ui2-droplist-item{
+	margin: 0px !important;
+	padding: 0px !important;
+}
+
+.ui2-droplist-item a{
+	text-decoration: none;
+	padding: 0px 22px 0px 5px;
+}
+
+.ui2-droplist-item a:hover{
+	background: #fbe4dd;
+	color: #fd6921;
+}
+
+.ui2-droplist-group-label{
+	margin-left: 5px;
+	font-weight: bold;
+}
+
+.ui2-droplist-group ul{
+	margin-left: 22px;
+}
