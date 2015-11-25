@@ -9,9 +9,9 @@ if(typeof define == 'function'){
 		);
 	});
 }else{
-	window.FeatherUi = window.FeatherUi || {};
-	window.FeatherUi.Util = window.FeatherUi.Util || {};
-	window.FeatherUi.Util.string = factory(CryptoJS, window, window.FeatherUi.Util.object);
+	window.jQuery.featherUi = window.jQuery.featherUi || {};
+	window.jQuery.featherUi.Util = window.jQuery.featherUi.Util || {};
+	window.jQuery.featherUi.Util.string = factory(CryptoJS, window, window.jQuery.featherUi.Util.object);
 }
 })(window, function(CryptoJS, base64, object){
 

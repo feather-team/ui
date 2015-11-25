@@ -5,7 +5,7 @@ if(typeof define == 'function'){
 		return factory();
 	});
 }else{
-	window.jQuery.featherUi = window.jQuery.FeatherUi || {};
+	window.jQuery.featherUi = window.jQuery.featherUi || {};
     window.jQuery.featherUi.Template = factory();
 }
 })(window, function(){

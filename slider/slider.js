@@ -8,8 +8,8 @@ if(typeof define == 'function'){
 		);
 	});
 }else{
-	window.FeatherUi = window.FeatherUi || {};
-	window.FeatherUi.Slider = factory(window.jQuery || window.$);
+	window.jQuery.featherUi = window.jQuery.featherUi || {};
+	window.jQuery.featherUi = factory(window.jQuery || window.$);
 }
 })(window, function($, Class){
 var now = $.now;

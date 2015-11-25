@@ -10,7 +10,7 @@ if(typeof define == 'function'){
 		};
 	});
 }else{
-	window.FeatherUi = window.FeatherUi || {};
-	window.FeatherUi.Util = window.FeatherUi.Util || {};
+	window.jQuery.featherUi = window.jQuery.featherUi || {};
+	window.jQuery.featherUi.Util = window.jQuery.featherUi.Util || {};
 }
 })(window);
