@@ -55,7 +55,7 @@ $('#uploader').uploader({
 	buttonText: '上传文件'
 });
 
-$('#uploader').on('uploadSuccess', function(file, data){
+$('#uploader').uploader().on('uploadSuccess', function(file, data){
 	console.log(file, data);
 });
 ```
