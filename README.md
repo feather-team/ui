@@ -7,7 +7,7 @@ feather-ui组件库是一套基于jquery/zepto的简单，轻量，且遵循暴�
 
 feather-ui只提供了一些网站上的常用组件以及一些简单的特效，因使用者的需求往往是很简单的，可能仅仅只是需要一些简单的特效。另外一方面，一般开源的组件库往往会实现各种功能以便组件库看上去更完善，然而对于需要定制的使用者其实是一种灾难，往往因为臃肿的代码而不敢下手。所以feather-ui提倡暴露更多的核心api，让使用者更加容易的去进行扩展，以便适应自己的业务场景。
 
-##### 注：feather-ui不会更新一般比如图表类，表格类等插件，因这些插件已经真的够多的了！
+##### 注：feather-ui不会更新图表类，表格类等插件，因这些插件已经真的够多的了！
 
 feather-ui兼容了模块化，以及传统方式使用，如果是非模块下的调用，则需要提前知道组件的依赖是哪些，具体的可以进组件文件中查看，比如mask组件，依赖于jquery.js，则需要提前加载jquery，方式如下:
 
@@ -21,6 +21,12 @@ var mask = new window.jQuery.featherUi.Mask();
 </script>
 ```
 
+##### feather-ui中有很多依赖的关系，建议：
+
+* 使用模块化加载方式去解决依赖问题
+* 使用[feather](http://github.com/feather-team/feather)等工程构建框架去解决依赖问题，而且会带来很多不一样的惊喜！！！
+
+
 ###2.0和以往版本的主要区别：
 
 * 增加了一部分新功能
@@ -28,10 +34,13 @@ var mask = new window.jQuery.featherUi.Mask();
 * 和dom相关的组件都被绑定至$.fn上，也就是可以使用这样的方式调用组件了：
 
 ```js
-//dom元素首次和droplist对象绑定关系，返回droplist对象，非jquery对象
+//1. 调用组件方法时，第一个参数为Object，则会进行初始化，参数会作为options传入组件类中，并返回实例化后的对象
+//2. 调用组件方法时，第一个参数为空时，返回实例化后的对象，如果没有被实例化，则会进行实例化再返回
+//3. 调用组件方法时，第一个参数为String时，则会执行实例化对象后的action操作，并返回jQuery对象，如果没有被实例化，则会进行实例化再返回
+//4. dom元素第一次调用组件时，会与组件绑定关系，并初始化组件，随后调用，则不会进行初始化
 $('#droplist').droplist();
 
-//再次调用一样返回droplist对象
+//再次调用返回第一次初始化的droplist对象
 $('#droplist').droplist().on('select', function(){});
 
 //直接在droplist方法内执行droplist的方法，完成后，返回jquery对象
@@ -55,13 +64,6 @@ $('#droplist').droplist().on('sayHello', function(){
 $('#droplist').droplist().trigger('sayHello');
 ```
 这些插件都继承于预定义类Event，更多使用方法可查看[Event](/class)
-
-
-##### 注：feather-ui中有很多依赖的关系，建议：
-
-* 使用模块化加载方式去解决依赖问题
-* 使用[feather](http://github.com/feather-team/feather)等工程构建框架去解决依赖问题，而且会带来很多不一样的惊喜！！！
-
 
 ###组件列表
 * [Dialog](/dialog)
