@@ -58,6 +58,7 @@ Tips.instance = null;
 Tips.destroy = function(){
 	if(Tips.instance){
 		Tips.instance.destroy();
+		Tips.instance = null;
 	}
 };
 
