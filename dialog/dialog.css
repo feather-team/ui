@@ -1,20 +1,23 @@
-.ui2-dialog-container{
+:root .ui2-dialog-wraper{
+    border: 0px;
+}
+
+.ui2-dialog-wraper-uncustom{
+    background: #fff;
+    box-shadow: 0px 0px 5px 1px #000;
+    padding: 0px;
+    display: inline-block;
+    font-family: Helvetica Neue, Hiragino Sans GB, Microsoft Yahei, Simhei, sans-serif;
+}
+
+.ui2-dialog-wraper{
     -moz-user-select: none;
     position: fixed;
     _position: absolute;
     left: 0px;
     top: 0px;
-    background: #fff;
     z-index: 10000;
-    box-shadow: 0px 0px 5px 1px #000;
-    padding: 0px;
-    display: inline-block;
     display: none;
-    font-family: Helvetica Neue, Hiragino Sans GB, Microsoft Yahei, Simhei, sans-serif;
-}
-
-:root .ui2-dialog-container{
-    border: 0px;
 }
 
 .ui2-dialog-container a:hover{

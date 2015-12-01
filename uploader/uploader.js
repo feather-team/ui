@@ -92,7 +92,7 @@ var prototype = {
 		});
 
 		if(!self.dom.attr('id')){
-			self.dom.attr('id', 'ui2-uploader-' + $.now);
+			self.dom.attr('id', 'ui2-uploader-' + $.now());
 		}
 
 		self.dom.uploadify(options);

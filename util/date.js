@@ -7,9 +7,9 @@ if(typeof define == 'function'){
 		);
 	});
 }else{
-	window.FeatherUi = window.FeatherUi || {};
-	window.FeatherUi.Util = window.FeatherUi.Util || {};
-	window.FeatherUi.Util.date = factory(window.FeatherUi.Util.string);
+	window.jQuery.featherUi = window.jQuery.featherUi || {};
+	window.jQuery.featherUi.Util = window.jQuery.featherUi.Util || {};
+	window.jQuery.featherUi.Util.date = factory(window.jQuery.featherUi.Util.string);
 }
 })(window, function(string){
 

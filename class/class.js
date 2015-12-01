@@ -7,7 +7,7 @@ if(typeof define == 'function'){
         );
     });
 }else{
-    window.jQuery.featherUi = window.jQuery.FeatherUi || {};
+    window.jQuery.featherUi = window.jQuery.featherUi || {};
     window.jQuery.featherUi.Class = factory(window.jQuery || window.$);
 }
 })(window, function($){

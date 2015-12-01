@@ -8,7 +8,7 @@ if(typeof define == 'function'){
 		);
 	});
 }else{
-	window.jQuery.featherUi = window.jQuery.FeatherUi || {};
+	window.jQuery.featherUi = window.jQuery.featherUi || {};
     window.jQuery.featherUi.Mask = factory(window.jQuery || window.$, window.jQuery.featherUi.Class);
 }
 })(window, function($, Class){
