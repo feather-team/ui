@@ -42,7 +42,8 @@ var Tips = Class.extend('Event', {
 		if(typeof opt.timeout == 'number'){
 			self.id = setTimeout(function(){
 				self.destroy();
-			}, opt.timeout);	
+				Tips.instance = null;
+			}, opt.timeout);
 		}
 	},
 
