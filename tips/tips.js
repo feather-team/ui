@@ -42,7 +42,7 @@ var Tips = Class.extend('Event', {
 		if(typeof opt.timeout == 'number'){
 			self.id = setTimeout(function(){
 				self.destroy();
-			}, opt.timeout);	
+			}, opt.timeout);
 		}
 	},
 
@@ -50,6 +50,7 @@ var Tips = Class.extend('Event', {
 		this.$.destroy();
 		this.$ = null;
 		clearTimeout(this.id);
+		Tips.instance = null;
 	}
 });
 
@@ -58,7 +59,6 @@ Tips.instance = null;
 Tips.destroy = function(){
 	if(Tips.instance){
 		Tips.instance.destroy();
-		Tips.instance = null;
 	}
 };
 

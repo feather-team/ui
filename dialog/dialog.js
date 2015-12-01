@@ -30,7 +30,8 @@ return Class.$factory('dialog', {
 			autoOpen: false,
 			buttons: {},
 			handle: null,				//指定打开和关闭dialog的元素
-			className: ''
+			className: '',
+			customWraper: false
 		}, opt || {});
 
 		this.init();
@@ -41,12 +42,11 @@ return Class.$factory('dialog', {
 
 		self.firstOpenStatus = false;
 		self.dom = null;
-		self.domParent = null;
 
-		var wraper = self.wraper = $(self.options.container);
+		var container = self.container = $(self.options.container);
 
-		if(wraper[0] != doc.body){
-			!/fixed|absolute/.test(wraper.css('position')) && wraper.css('position', 'relative');
+		if(container[0] != doc.body){
+			!/fixed|absolute/.test(container.css('position')) && container.css('position', 'relative');
 		}
 
 		self.create();
@@ -59,7 +59,7 @@ return Class.$factory('dialog', {
 		var self = this;
 
 		self.createMask();
-		self.createContainer();
+		self.createWraper();
 		self.initEvent();
 	},
 
@@ -76,7 +76,7 @@ return Class.$factory('dialog', {
 			});
 		}
 
-		self.container.find('.ui2-dialog-close').click(function(){
+		self.wraper.find('.ui2-dialog-close').click(function(){
 			self.close();
 		});
 
@@ -99,27 +99,34 @@ return Class.$factory('dialog', {
 
 	//创建内容部分
 	//包括创建内容　按钮
-	createContainer: function(){
-		var self = this, options = self.options;
-		var $container = self.container = $('<div class="ui2-dialog-container">').html([
-			'<div class="ui2-dialog-content"></div>'
-		].join('')).appendTo(self.wraper).addClass(options.className);
+	createWraper: function(){
+		var self = this, options = self.options, $wraper;
 
-		$container.prepend([
-			'<strong class="ui2-dialog-header">',
-	    		'<a href="javascript:void(0);" class="ui2-dialog-close">&times;</a>',
-	    		'<span class="ui2-dialog-title"></span>',
-	    	'</strong>'
-	    ].join(''));
+		if(options.customWraper && options.dom){
+			self.wraper = $(options.dom).addClass('ui2-dialog-wraper-custom ui2-dialog-wraper');
+			self.content = self.wraper.find('.ui2-dialog-content');
+		}else{
+			$wraper = self.wraper = $('<div class="ui2-dialog-wraper ui2-dialog-wraper-uncustom">');
+			$wraper.html([
+				'<strong class="ui2-dialog-header">',
+		    		'<a href="javascript:void(0);" class="ui2-dialog-close">&times;</a>',
+		    		'<span class="ui2-dialog-title"></span>',
+		    	'</strong>'
+		    ].join(''));
 
-		self.setTitle(options.title);
+			self.setTitle(options.title);
+
+			$wraper.css('width', options.width);
+
+			self.content = $('<div class="ui2-dialog-content"></div>').css({
+				height: options.height
+			}).appendTo($wraper);
+
+			self.initContent();
+		}
+
+		self.wraper.appendTo(options.container).addClass(options.className);
 		self.createButtons();
-		self.initContent();
-
-		$container.css('width', options.width);
-		$container.find('.ui2-dialog-content').css({
-			height: options.height
-		});
 	},
 
 	initContent: function(){
@@ -138,7 +145,7 @@ return Class.$factory('dialog', {
 		var self = this;
 
 		self.releaseDom();
-		self.container.find('.ui2-dialog-content').html(content);
+		self.content.html(content);
 		self.resetPosition();
 	},
 
@@ -147,28 +154,35 @@ return Class.$factory('dialog', {
 
 		self.releaseDom();
 		self.dom = $(dom).show();
-		self.domParent = self.dom.parent();
-		self.container.find('.ui2-dialog-content').empty().append(self.dom);
+		self.content.empty().append(self.dom);
 		self.resetPosition();
 	},
 
 	load: function(url){
 		var self = this;
 
-		self.container.find('.ui2-dialog-content').load(url, function(){
+		self.content.load(url, function(){
 			self.trigger('contentLoaded');
 			self.resetPosition();
 		});
 	},
 
 	//释放dom
-	releaseDom: function(){
+	releaseDom: function(dom){
 		var self = this;
 
+		if(!dom && !(dom = self.dom)){
+			return ;
+		}
+
+		self.container.append(dom);
+
+		if(self.options.customWraper){
+			dom.removeClass('ui2-dialog-wraper-custom ui2-dialog-wraper').removeClass(self.options.className);
+		}
+
 		if(self.dom){
-			self.domParent.append(self.dom);
 			self.dom = null;
-			self.domParent = null;
 		}
 	},
 
@@ -177,7 +191,7 @@ return Class.$factory('dialog', {
 
 		if($.isEmptyObject(self.options.buttons)) return;
 
-		self.buttons = $('<div class="ui2-dialog-buttons">').appendTo(self.container);
+		self.buttons = $('<div class="ui2-dialog-buttons">').appendTo(self.wraper);
 		self.setButtons(self.options.buttons);
 	},
 
@@ -238,7 +252,7 @@ return Class.$factory('dialog', {
 
 	//设置title，为false时，则头部会被隐藏掉
 	setTitle: function(title){
-		var $header = this.container.find('.ui2-dialog-header');
+		var $header = this.wraper.find('.ui2-dialog-header');
 		$header.removeClass('ui2-dialog-header-nob').show();
 
 		if(title === false){
@@ -255,18 +269,18 @@ return Class.$factory('dialog', {
 
 		self.mask && self.mask.resetPosition();
 
-		var wraper = self.wraper[0], position;
+		var container = self.container[0], position;
 
-		if(wraper === doc.body){
+		if(container === doc.body){
 			position = 'fixed';
-			wraper = window;
+			container = window;
 		}else{
 			position = 'absolute';
 		}
 
-		self.container.css({
-			left: parseInt(($(wraper).outerWidth() - self.container.outerWidth())/2),
-			top: parseInt(($(wraper).outerHeight() - self.container.outerHeight())/2),
+		self.wraper.css({
+			left: parseInt(($(container).outerWidth() - self.wraper.outerWidth())/2),
+			top: parseInt(($(container).outerHeight() - self.wraper.outerHeight())/2),
 			position: position
 		});
 	},
@@ -275,7 +289,7 @@ return Class.$factory('dialog', {
 		var self = this, options = self.options;
 
 		self.mask && self.mask.open();
-		self.container.show();
+		self.wraper.show();
 		self.resetPosition();
 
 		if(!self.firstOpenStatus){
@@ -290,21 +304,28 @@ return Class.$factory('dialog', {
 		var self = this, options = self.options;
 
 		self.mask && self.mask.close();
-		self.container.hide();
+		self.wraper.hide();
 		self.trigger('close');
 	},
 
 	destroy: function(){
-		var self = this;
+		var self = this, options = self.options;
 
 		self.mask && self.mask.destroy();
 		self.mask = null;
-		self.container.remove();
-		self.container = null;
+		
+		if(!options.customWraper){
+			self.wraper.remove();
+			self.releaseDom();
+		}else{
+			self.releaseDom(self.wraper);
+		}
+
+		self.wraper = null;
 		self.ofs(window, 'resize');
-		self.options.handle && self.ofs(self.options.handle, 'click');
+		options.handle && self.ofs(options.handle, 'click');
 		self.ofs(doc, 'keyup');
-		self.releaseDom();
+		
 	}
 });
 });
