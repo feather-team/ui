@@ -20,11 +20,11 @@
     display: none;
 }
 
-.ui2-dialog-container a:hover{
+.ui2-dialog-wraper a:hover{
     text-decoration: none;
 }
 
-.ui2-dialog-header{
+.ui2-dialog-wraper-uncustom .ui2-dialog-header{
     display: block;
     font-weight: bold;
     height: 40px;
@@ -36,12 +36,12 @@
     font-size: 14px;
 }
 
-.ui2-dialog-header-nob{
+.ui2-dialog-wraper-uncustom .ui2-dialog-header-nob{
     background: #fff;
     border: 0px;
 }
 
-.ui2-dialog-close{
+.ui2-dialog-wraper-uncustom .ui2-dialog-close{
     text-decoration: none;
     float: right;
     font-weight: normal;
@@ -54,24 +54,24 @@
     font-family: verdana;
 }
 
-.ui2-dialog-close:hover{
+.ui2-dialog-wraper-uncustom .ui2-dialog-close:hover{
     color: #666;
 }
 
-.ui2-dialog-content{
+.ui2-dialog-wraper-uncustom .ui2-dialog-content{
     padding: 10px;
     overflow: auto;
     max-height: 520px;
     min-width: 50px;
 }
 
-.ui2-dialog-buttons{
+.ui2-dialog-wraper-uncustom .ui2-dialog-buttons{
     text-align: center;
     border: 0px;
     padding-bottom: 15px;
 }
 
-.ui2-dialog-button{
+.ui2-dialog-wraper-uncustom .ui2-dialog-button{
     cursor: pointer;
     border: 0px;
     margin: 10px 19px;
@@ -87,7 +87,7 @@
     text-decoration: none;
 }
 
-.ui2-dialog-button:hover{
+.ui2-dialog-wraper-uncustom .ui2-dialog-button:hover{
     color: #fff;
     background: #ef5921;
 }
