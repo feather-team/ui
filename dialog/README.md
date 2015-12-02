@@ -16,6 +16,35 @@ Dialog组件
 *   className: 为dialog指定一个className
 *   handle：触发打开dialog的元素
 *   buttons：dialog按钮组
+*   customWraper: 是否自定义dialog的wraper，默认为false，如果为true，传入dom时，dom则自动变成dialog的整体，如果需要使用dialog的部分api时，则需和原dialog结构保持一致。
+
+```html
+<div id="dialog"></div>
+
+<script>
+//直接将自己当成dialog，并实例化
+$('#dialog').dialog({
+    customWraper: true
+});
+</script>
+
+
+<!--保持结构一致，可支持设置按钮和标题等api-->
+<div id="dialog" class="ui2-dialog-wraper">
+    <strong class="ui2-dialog-header">
+        <a href="javascript:void(0);" class="ui2-dialog-close">&times;</a>
+        <span class="ui2-dialog-title"></span>
+    </strong>
+    <div class="ui2-dialog-content"></div>
+    <div class="ui2-dialog-buttons"></div>
+</div>
+
+<script>
+$('#dialog').dialog({
+    customWraper: true
+}).setContent("hello, world");
+</script>
+```
 
 ###Events
 
