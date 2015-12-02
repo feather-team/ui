@@ -253,12 +253,12 @@ return Class.$factory('dialog', {
 	//设置title，为false时，则头部会被隐藏掉
 	setTitle: function(title){
 		var $header = this.wraper.find('.ui2-dialog-header');
-		$header.removeClass('ui2-dialog-header-nob').show();
+		$header.removeClass('ui2-dialog-header-nob');
 
 		if(title === false){
 			$header.hide();
 		}else if(title == ''){
-			$header.addClass('ui2-dialog-header-nob');
+			$header.addClass('ui2-dialog-header-nob').css('display', 'block');
 		}
 
 		$header.find('.ui2-dialog-title').html(title);
