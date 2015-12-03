@@ -1,7 +1,7 @@
 .ui2-tips-success, .ui2-tips-error, .ui2-tips-loading, .ui2-tips-warn{
-	height: 70px;
+    height: 70px;
     line-height: 70px;
-    padding: 0px 20px 0px 60px;
+    padding: 0px 20px 0px 60px !important;
     font-weight: bold;
     background-image: url('./images/success.png');
     background-position: 15px center;
@@ -18,13 +18,13 @@
 }
 
 .ui2-tips-warn{
-	background-image: url('./images/warn.png');
+    background-image: url('./images/warn.png');
 }
 
 .ui2-tips .ui2-dialog-content{
-	display: inline-block;
+    display: inline-block;
 }
 
 .ui2-tips .ui2-dialog-content{
-	font-size: 16px;
+    font-size: 16px;
 }
