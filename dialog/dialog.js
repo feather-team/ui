@@ -94,7 +94,7 @@ return Class.$factory('dialog', {
 	createMask: function(){
 		if(!this.options.mask) return;
 
-		this.mask = new Mask({autoOpen: false, container: this.wraper});
+		this.mask = new Mask({autoOpen: false, container: this.container});
 	},
 
 	//创建内容部分
