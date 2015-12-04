@@ -29,8 +29,6 @@ return Class.$factory('mask', {
 	init: function(){
 		var self = this, container = self.container = $(self.options.dom);
 
-		self.eid = $.now();
-
 		if(container[0] != doc.body){
 			!/fixed|absolute/.test(container.css('position')) && container.css('position', 'relative');
 		}
@@ -40,7 +38,7 @@ return Class.$factory('mask', {
 			opacity: self.options.opacity
 		}).appendTo(self.container);
 
-		$(window).on('resize.' + self.eid, function(){
+		self.o2s(window, 'resize', function(){
 			self.resetPosition();
 		});
 
@@ -70,8 +68,7 @@ return Class.$factory('mask', {
 	destroy: function(){
 		this.mask.remove();	
 		this.mask = null;
-		$(window).off('resize.' + this.eid);
+		self.ofs(window, 'resize');
 	}
 });
-
 });
