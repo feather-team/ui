@@ -68,7 +68,7 @@ return Class.$factory('mask', {
 	destroy: function(){
 		this.mask.remove();	
 		this.mask = null;
-		self.ofs(window, 'resize');
+		this.ofs(window, 'resize');
 	}
 });
 });
