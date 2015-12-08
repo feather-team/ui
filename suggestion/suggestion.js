@@ -180,9 +180,17 @@ var Suggestion = Class.$factory('suggestion', {
 
 			var data = self.data, cache = opts.caching && !(!$.trim(kw) && opts.emptyNoCache) ? Suggestion.cache[kw] : false;
 			
-			if(data && (data = self._match.call(self, data, kw)).length){
-				//if kw can be find in local data
-				self.build(data, kw);
+			if(data){
+				if(opts.dataField){
+					data = Util.object.get(data, opts.dataField) || [];
+				}
+
+				console.log(data);
+
+				if((data = self._match.call(self, data, kw)).length){
+					//if kw can be find in local data
+					self.build(data, kw);
+				}
 			}else if(cache){
 				//if kw in cache
 				self.build(cache, kw);

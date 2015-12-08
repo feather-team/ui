@@ -1071,6 +1071,7 @@ if(typeof define == 'function'){
 					successTimeout  : 30,                 // The number of seconds to wait for Flash to detect the server's response after the file has finished uploading
 					uploadLimit     : 0,                  // The maximum number of files you can upload
 					width           : 120,                // The width of the browse button
+					checkQueueExists: false,			  // check file in queue
 					
 					// Events
 					overrideEvents  : []             // (Array) A list of default event handlers to skip
@@ -1553,18 +1554,21 @@ if(typeof define == 'function'){
 
 			// Check if a file with the same name exists in the queue
 			var queuedFile = {};
-			for (var n in this.queueData.files) {
-				queuedFile = this.queueData.files[n];
-				if (queuedFile.uploaded != true && queuedFile.name == file.name) {
-					var replaceQueueItem = confirm('"' + file.name + '" 此文件已在上传队列中.\n确定进行替换?');
-					if (!replaceQueueItem) {
-						this.cancelUpload(file.id);
-						this.queueData.filesCancelled++;
-						return false;
-					} else {
-						$('#' + queuedFile.id).remove();
-						this.cancelUpload(queuedFile.id);
-						this.queueData.filesReplaced++;
+
+			if(settings.checkQueueExists){
+				for (var n in this.queueData.files) {
+					queuedFile = this.queueData.files[n];
+					if (queuedFile.uploaded != true && queuedFile.name == file.name) {
+						var replaceQueueItem = confirm('"' + file.name + '" 此文件已在上传队列中.\n确定进行替换?');
+						if (!replaceQueueItem) {
+							this.cancelUpload(file.id);
+							this.queueData.filesCancelled++;
+							return false;
+						} else {
+							$('#' + queuedFile.id).remove();
+							this.cancelUpload(queuedFile.id);
+							this.queueData.filesReplaced++;
+						}
 					}
 				}
 			}

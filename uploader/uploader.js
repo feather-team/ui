@@ -111,8 +111,8 @@ $.each('cancel destroy disable settings stop upload'.split(' '), function(key, m
 		self.dom.uploadify.apply(self.dom, args);
 		self.dom.removeData(DATANAME);
 		/ui2-uploader-\d+/.test(self.dom.attr('id')) && self.dom.removeAttr('id');
-		self.uploader.removeData(DATANAME);
 		self.dom = null;
+		self.uploader.removeData(DATANAME);
 		self.uploader = null;
 	};
 });
