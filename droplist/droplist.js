@@ -41,7 +41,6 @@ var DropList = Class.$factory('droplist', {
 
 		self.dom = opts.dom ? $(opts.dom) : null;
 		self.setList(opts.dom || opts.list || opts.items, opts.defaultValue);
-		self.eid = $.now();
 		self.isHide = true;
 
 		self.initSize();
@@ -61,7 +60,7 @@ var DropList = Class.$factory('droplist', {
 				e.stopPropagation();
 			});
 
-			$(document).on('click.' + self.eid, function(){
+			self.o2s(document, 'click', function(){
 				!self.isHide && self.close();
 			});
 		}
@@ -204,7 +203,7 @@ var DropList = Class.$factory('droplist', {
 		var self = this;
 
 		self.wraper.remove();
-		$(document).off('click.' + self.eid);
+		self.ofs(document, 'click');
 		self.dom && (self.dom = null);
 	}
 });
