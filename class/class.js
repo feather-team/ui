@@ -113,11 +113,32 @@ return {
         }
 
         //set prototype, _super's prototype and overrewrite self _super
-        prototype = $.extend({}, _super, {
-            _super: _super
-        }, prototype);
+        var klass = this.create($.extend({}, _super, prototype));
+        klass._super = _super;
+        //call parent construct
+        //example
+        /*
+        Class.extend(A, {
+            initialize: function(){
+                //call parent construct
+                this._super();
+                this._super.setName.call(this);
+            }
+        });
+        */
+        klass.prototype._super = function(){
+            //store self _super
+            var sup = klass._super;
 
-        return this.create(prototype);
+            //set self._super = super klass._super, prevent call this._super in super's initialize method cause endless loop;
+            klass._super = sup.constructor._super;
+            //call super's initialize
+            sup && sup.initialize.apply(this, arguments);
+            //set back until the end
+            klass._super = sup;
+        };
+
+        return klass;
     },
 
     /**

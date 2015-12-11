@@ -135,6 +135,12 @@ return Class.$factory('pager', {
 		}
 
 		return arr;
+	},
+
+	destroy: function(){
+		this.container.remove();
+		this.container = null;
+		this.dom = null;
 	}
 });
 

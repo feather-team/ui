@@ -273,6 +273,21 @@ var Calendar = Class.$factory('calendar', {
 
 	getDate: function(date){
 		return Util.date.date(this.options.dateFormat, date.getTime());
+	},
+
+	destroy: function(){
+		var self = this;
+
+		self.yearSelecter && self.yearSelecter.destroy();
+		self.yearSelecter = null;
+		self.monthSelecter && self.monthSelecter.destroy();
+		self.monthSelecter = null;
+		self.wraper.remove();
+		self.wraper = null;
+		self.container = null;
+		self.ofs(self.target, 'click');
+		self.ofs(window, 'resize scroll');
+		self.ofs(document, 'click');
 	}
 });
 

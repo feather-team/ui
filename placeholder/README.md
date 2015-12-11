@@ -11,6 +11,7 @@ PlaceHolder
 ###Api:
 
 * setPlaceHolder([text])：设置placeholder，如果为空，则自动读取placeholder和data-placeholder属性
+* destroy: 摧毁对象
 
 ##Example
 ```html

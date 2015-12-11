@@ -21,3 +21,4 @@ Pager分页组件
 ###Api:
 
 * to(pageIndex)：跳转至第几页，该方法会触发switch事件
+* destroy: 摧毁对象

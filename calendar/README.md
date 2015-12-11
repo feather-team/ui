@@ -26,6 +26,7 @@ Calendar组件
 *   toMonth(month[, year]): 切换至某一年的某一月,此月为正常月份，非js date返回月份，比如要返回1月份，则传入1即可
 *   open：打开日历
 *   close: 关闭日历
+*   destroy: 摧毁对象
  
 ###Example
 

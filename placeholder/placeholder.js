@@ -25,22 +25,27 @@ var PlaceHolder = Class.$factory('placeholder', {
 		}, opt || {});
 
 		self.placeholder = null;
+		self.dom = $(self.options.dom);
 		self.initEvent();
 		self.setPlaceHolder();
 	},
 
 	initEvent: function(){
-		var self = this, $dom = self.dom = $(self.options.dom);
+		var self = this;
 		
 		if(!PlaceHolder.isSupport){
-			$dom.blur($.proxy(self.empty2show, self)).focus(function(){
+			self.o2s(self.dom, 'blur', function(){
+				self.empty2show();
+			});
+
+			self.o2s(self.dom, 'focus', function(){
 				self.placeholder.hide();
 			});
 		}
 	},
 
 	setPlaceHolder: function(text){
-		var self = this, $dom = self.dom = $(self.options.dom);
+		var self = this, $dom = self.dom;
 		text = text || self.options.text || $dom.attr('placeholder') || $dom.attr('data-placeholder');
 
 		$dom.attr('placeholder', text);
@@ -73,6 +78,14 @@ var PlaceHolder = Class.$factory('placeholder', {
 	empty2show: function(){
 		var self = this;
 		self.placeholder && self.dom.val() == '' && self.placeholder.show();
+	},
+
+	destroy: function(){
+		var self = this;
+		
+		self.placeholder.remove();
+		self.ofs(self.dom, 'blur focus');
+		self.dom = null;
 	}
 });
 
