@@ -88,7 +88,7 @@ return Class.$factory('tabs', {
 
         if(index > self.doms.length - 1) return false;
         
-        self.t2s.trigger(self.doms.eq(index), self.options.event);
+        self.t2s(self.doms.eq(index), self.options.event);
     }
 });
 });
