@@ -32,9 +32,10 @@ return Class.$factory('tabs', {
     init: function(){
         var self = this, opts = self.options;
 
-        self.doms = $(opts.selecter, opt.dom);
+        self.doms = $(opts.selecter, opts.dom);
         self.initTargets();
         self.initEvent();
+        self.to(0);
     },
 
     refresh: function(){
