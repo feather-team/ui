@@ -35,7 +35,7 @@ return Class.$factory('tabs', {
         self.doms = $(opts.selecter, opts.dom);
         self.initTargets();
         self.initEvent();
-        self.to(0);
+        self.to(opts.currentIndex);
     },
 
     refresh: function(){
