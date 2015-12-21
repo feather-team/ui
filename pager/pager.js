@@ -20,8 +20,8 @@ return Class.$factory('pager', {
 			pageTotal: 0,	//整页数
 			perPage: 10,	//显示几页
 			url: '',		//url不为空，可直接跳转，而非调用callback
-			first: true,	//显示首页
-			last: true,		//显示最后一页
+			showFirst: true,	//显示首页
+			showLast: true,		//显示最后一页
 			currentPage: 1,	//当前页码
 			currentPageClassName: 'ui2-pager-current',	//当前页class
 			className: '',
@@ -108,7 +108,7 @@ return Class.$factory('pager', {
 			arr.push([opt.previous || '&lt;', index - 1, 'ui2-pager-previous']);
 		}
 
-		if(opt.first){
+		if(opt.showFirst){
 			if(start > 2){
 				arr.push(['1', 1]);
 				arr.push(['&middot;&middot;&middot;']);
@@ -121,7 +121,7 @@ return Class.$factory('pager', {
 
 		while(i <= end) arr.push([i, i++]);
 
-		if(opt.last){
+		if(opt.showLast){
 			if(end < total - 1){
 				arr.push(['&middot;&middot;&middot;']);
 				arr.push([total, total]);
