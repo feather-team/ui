@@ -70,6 +70,7 @@ $('#suggestion').suggestion({
 		}
 	},
 	dataField: 'data.userList',
+	matchKwField: 'name',
 	//自定义匹配规则
 	match: function(data, kw){
 		var result = [];
@@ -108,6 +109,7 @@ $('#suggestion').suggestion({
 		}
 	},
 	dataField: 'data.userList',
+	matchKwField: 'name',
 	//自定义匹配规则
 	match: function(data, kw){
 		var result = [];
@@ -154,6 +156,7 @@ $('#suggestion').suggestion({
 		}
 	},
 	dataField: 'data.userList',
+	matchKwField: 'name',
 	//自定义匹配规则
 	match: function(data, kw){
 		var result = [];
