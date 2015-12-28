@@ -242,7 +242,7 @@ var Suggestion = Class.$factory('suggestion', {
 
 			$.each(data, function(key, item){
 				var txt = typeof item == 'string' ? item : item[opts.matchKwField];
-				html += '<li class="ui2-suggestion-item" data-suggestion-index="' + key + '" data-suggestion-kw="' + txt + '">' + String(self.format(txt, kw)) + '</li>';
+				html += '<li class="ui2-suggestion-item" data-suggestion-index="' + key + '" data-suggestion-kw="' + txt + '">' + String(self.format(item, kw)) + '</li>';
 			});
 
 			self.items = $(html);
