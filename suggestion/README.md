@@ -76,7 +76,7 @@ $('#suggestion').suggestion({
 
 		data.forEach(function(item){
 			if(item.name.indexOf(kw)){
-				result.push(item.name);
+				result.push(item);
 			}
 		});
 
@@ -114,7 +114,7 @@ $('#suggestion').suggestion({
 
 		data.forEach(function(item){
 			if(item.name.indexOf(kw)){
-				result.push(item.name);
+				result.push(item);
 			}
 		});
 
@@ -160,7 +160,7 @@ $('#suggestion').suggestion({
 
 		data.forEach(function(item){
 			if(item.name.indexOf(kw)){
-				result.push(item.name);
+				result.push(item);
 			}
 		});
 
