@@ -172,7 +172,7 @@ $('#suggestion').suggestion({
 
 	//返回一个自定义的候选项字符串
 	format: function(item, kw){
-		return item.replace(kw, '<strong>' + kw + '</strong>');
+		return item.name.replace(kw, '<strong>' + kw + '</strong>');
 	}
 }).on('select', function(value, obj){
 	console.log(value); //张三
