@@ -70,13 +70,14 @@ $('#suggestion').suggestion({
 		}
 	},
 	dataField: 'data.userList',
+	matchKwField: 'name',
 	//自定义匹配规则
 	match: function(data, kw){
 		var result = [];
 
 		data.forEach(function(item){
 			if(item.name.indexOf(kw)){
-				result.push(item.name);
+				result.push(item);
 			}
 		});
 
@@ -108,13 +109,14 @@ $('#suggestion').suggestion({
 		}
 	},
 	dataField: 'data.userList',
+	matchKwField: 'name',
 	//自定义匹配规则
 	match: function(data, kw){
 		var result = [];
 
 		data.forEach(function(item){
 			if(item.name.indexOf(kw)){
-				result.push(item.name);
+				result.push(item);
 			}
 		});
 
@@ -123,7 +125,7 @@ $('#suggestion').suggestion({
 
 	//返回一个自定义的候选项字符串
 	format: function(item, kw){
-		return item.replace(kw, '<strong>' + kw + '</strong>');
+		return item.name.replace(kw, '<strong>' + kw + '</strong>');
 	}
 });
 ```
@@ -154,13 +156,14 @@ $('#suggestion').suggestion({
 		}
 	},
 	dataField: 'data.userList',
+	matchKwField: 'name',
 	//自定义匹配规则
 	match: function(data, kw){
 		var result = [];
 
 		data.forEach(function(item){
 			if(item.name.indexOf(kw)){
-				result.push(item.name);
+				result.push(item);
 			}
 		});
 
@@ -169,7 +172,7 @@ $('#suggestion').suggestion({
 
 	//返回一个自定义的候选项字符串
 	format: function(item, kw){
-		return item.replace(kw, '<strong>' + kw + '</strong>');
+		return item.name.replace(kw, '<strong>' + kw + '</strong>');
 	}
 }).on('select', function(value, obj){
 	console.log(value); //张三
