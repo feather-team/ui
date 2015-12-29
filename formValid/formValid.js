@@ -110,7 +110,7 @@ var FormValid = Class.$factory('formValid', {
 				}
 
 				if(!tmpStatus){
-					self.error(index, tmp.errorText);
+					self.error(index, tmp.errorText, tmp.showErrorStatus);
 					
 					if(errorStop){
 						return status;
@@ -126,8 +126,8 @@ var FormValid = Class.$factory('formValid', {
 		return status;
 	},
 
-	error: function(name, text){
-    	if(text != null || this.options.showErrorStatus){
+	error: function(name, text, showErrorStatus){
+    	if(this.options.showErrorStatus || showErrorStatus){
     		text = text || '';
 			this.setText(name, text || '', 'ui2-formvalid-field-error');   
     	} 
@@ -136,7 +136,7 @@ var FormValid = Class.$factory('formValid', {
     },
 
 	success: function(name, text, showSuccessStatus){
-		if(text != null || this.options.showSuccessStatus || showSuccessStatus){
+		if(this.options.showSuccessStatus || showSuccessStatus){
 			text = text || '';
 			this.setText(name, text, 'ui2-formvalid-field-success');	
 		}
