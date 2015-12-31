@@ -297,8 +297,8 @@ Calendar.getYM = function(year, month){
 	year && date.setFullYear(year);
 
 	if(month != null){
-		date.setMonth(month - 1);
 		date.setDate(1);
+		date.setMonth(month - 1);
 	}
 
 	return {
