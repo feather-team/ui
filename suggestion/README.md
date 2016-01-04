@@ -132,8 +132,8 @@ $('#suggestion').suggestion({
 
 ##Event
 
-* switch(txt)：上下键切换时，触发
-* select(value:候选项, data:候选项所在数据源中的数组项)：选择候选项时触发
+* switch(event, txt)：上下键切换时，触发
+* select(event, value:候选项, data:候选项所在数据源中的数组项)：选择候选项时触发
 
 ```js
 //规范对象数组格式
@@ -174,7 +174,7 @@ $('#suggestion').suggestion({
 	format: function(item, kw){
 		return item.name.replace(kw, '<strong>' + kw + '</strong>');
 	}
-}).on('select', function(value, obj){
+}).on('suggestion:select', function(event, value, obj){
 	console.log(value); //张三
 	console.log(obj); //{uid: 1, name: "张三"}
 });

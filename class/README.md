@@ -30,7 +30,7 @@ var A = Class.extend('Event', {
 	}
 });
 
-A.on('change', function(name, value){
+A.on('change', function(event, name, value){
 	console.log(name ' is ' + value + ' now!');
 });
 ```

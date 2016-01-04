@@ -17,7 +17,7 @@ DropList组件
 
 * open：打开dialog时触发
 * close： 关闭dialog时触发
-* select(key, value)：选择时触发
+* select(event, key, value)：选择时触发
 
 ###Api
 

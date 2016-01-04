@@ -16,7 +16,7 @@ Pager分页组件
 
 ###Events:
 
-* switch(pageIndex)：切换页码时触发
+* switch(event, pageIndex)：切换页码时触发
 
 ###Api:
 
@@ -32,7 +32,7 @@ $('#pager').pager({
 	perPage: 10,
 	currentPage: 10,
 	showFirst: false
-}).on('switch', function(index){
+}).on('pager:switch', function(event, index){
 	alert('选择跳转至第' + index + '页');
 });
 ```

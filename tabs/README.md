@@ -12,7 +12,7 @@ Tabs
 
 ###Event:
 
-* switch(index)：切换时触发
+* switch(event, index)：切换时触发
 
 ###Api
 
@@ -40,7 +40,7 @@ $('#tab-btns').tabs({
 	event: 'mouseover'
 });
 
-$('#tab-btns').tabs().on('switch', function(index){
+$('#tab-btns').on('tabs:switch', function(index){
 	console.log(index);
 });
 

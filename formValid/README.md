@@ -12,8 +12,8 @@ FormValid组件
 
 ###Events
 
-* error(name, errorTxt)：错误时触发
-* success(name, successTxt)：成功时触发
+* error(event, name, errorTxt)：错误时触发
+* success(event, name, successTxt)：成功时触发
 
 ###Api
 
@@ -50,7 +50,7 @@ $('#form').formValid({
             errorText: '年龄错误'
         }
     }
-}).on('error', function(name, text){
+}).on('formValid:error', function(event, name, text){
     console.log(name, text);
 });
 ```
