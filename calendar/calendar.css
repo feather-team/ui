@@ -5,6 +5,7 @@
 	display: inline-block;
 	background: white;
 	font-family: Verdana;
+	display: none;
 }
 
 .ui2-calendar-container{
@@ -114,7 +115,7 @@
 	color: #ff6900 !important;
 }
 
-.ui2-calendar-item:hover{
+.ui2-calendar-item:hover, .ui2-calendar-item-active{
 	border: 1px solid #fce4dd;
 	color: #ff6900;
 }

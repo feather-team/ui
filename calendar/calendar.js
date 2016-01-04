@@ -31,7 +31,8 @@ var Calendar = Class.$factory('calendar', {
 			maxDate: null,
 			minDate: null,
 			yearRange: null,
-			dateFormat: 'Y-m-d'
+			dateFormat: 'Y-m-d',
+			selectedClassName: ''
 		}, options || {});
 
 		this.init();
@@ -40,9 +41,15 @@ var Calendar = Class.$factory('calendar', {
 	init: function(){
 		var self = this, opt = self.options;
 
-		self.target = opt.dom ? $(opt.dom) : $(opt.target);
+		self.target = $(opt.dom || opt.target);
+
+		if(!self.target.length){
+			self.target = null;
+		}
+		
 		self.wraper = $('<div class="ui2-calendar"></div>');
 		self.container = $(opt.container).append(self.wraper);
+		self.date = null;
 
 		self.initCalendar();
 
@@ -60,7 +67,7 @@ var Calendar = Class.$factory('calendar', {
 
 		self.toMonth();
 		self.initEvent();
-		self.close();
+		!self.target && self.open();
 	},
 
 	initCalendar: function(){
@@ -119,52 +126,58 @@ var Calendar = Class.$factory('calendar', {
 				defaultValue: ym.month
 			});
 		}
-
-		self.on('select', self.close);
 	},
 
 	initEvent: function(){
 		var self = this, opt = self.options;
 
-		self.o2s(self.target, 'click', function(){
-			self.open();
-			self.resetPosition();
-		});
+		if(self.target){
+			self.o2s(self.target, 'click', function(){
+				self.open();
+				self.resetPosition();
+			});
 
-		self.o2s(window, 'resize scroll', function(){
-			self.resetPosition();
-		});
+			self.o2s(window, 'resize scroll', function(){
+				self.resetPosition();
+			});
 
-		self.o2s(document, 'click', function(e){
-			e.target != self.target[0] && self.close();
-		});
+			self.o2s(document, 'click', function(e){
+				e.target != self.target[0] && self.close();
+			});
+
+			self.on('select', function(e, date, $item){
+				if('value' in self.target[0]){
+					self.target.val(date);
+				}else{
+					self.target.html(date);
+				}
+
+				self.close();
+			});
+		}
 
 		self.wraper.click(function(e){
 			var $item = $(e.target);
 
 			if($item.hasClass('ui2-calendar-item') && !$item.hasClass('ui2-calendar-item-disable')){
-				var date = $item.attr('data-calendar-date');
-
-				self.trigger('select', date);
-
-				if(self.target){
-					if('value' in self.target[0]){
-						self.target.val(date);
-					}else{
-						self.target.html(date);
-					}
+				if(opt.selectedClassName){
+					self.calendar.find('.ui2-calendar-item').removeClass(opt.selectedClassName);
+					$item.addClass(opt.selectedClassName);
 				}
+				
+				self.date = $item.attr('data-calendar-date');
+				self.trigger('select', self.date, $item);
 			}
 
 			e.stopPropagation();
 		});
 
 		if(opt.yearRange){
-			self.yearSelecter.on('select', function(v){
+			self.yearSelecter.on('select', function(event, v){
 				self.toMonth(v);
 			});
 
-			self.monthSelecter.on('select', function(v){
+			self.monthSelecter.on('select', function(event, v){
 				self.toMonth(self.year, v);
 			});
 		}else{
@@ -228,6 +241,10 @@ var Calendar = Class.$factory('calendar', {
 						cn += ' ui2-calendar-item-today';
 					}
 
+					if(self.date == d){
+						cn += ' ' + opt.selectedClassName;
+					}
+
 					if(self.minDate && d < self.minDate || self.maxDate && d > self.maxDate){
 						cn += ' ui2-calendar-item-disable';
 					}
@@ -255,7 +272,7 @@ var Calendar = Class.$factory('calendar', {
 	},
 
 	resetPosition: function(){
-		if(!this.target.length) return;
+		if(!this.target) return;
 
 		var self = this, offset = self.target.offset(), scrollTop = doc.body.scrollTop || doc.documentElement.scrollTop, top;
 
@@ -285,7 +302,7 @@ var Calendar = Class.$factory('calendar', {
 		self.wraper.remove();
 		self.wraper = null;
 		self.container = null;
-		self.ofs(self.target, 'click');
+		self.target && self.ofs(self.target, 'click');
 		self.ofs(window, 'resize scroll');
 		self.ofs(document, 'click');
 	}

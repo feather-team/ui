@@ -70,7 +70,7 @@ $('#dialog').dialog({
 
 ```js    
 //bind event
-$('#dialog').dialog().on('open', function(){
+$('#dialog').dialog().on('dialog:open', function(){
     console.log(123);
 });
  

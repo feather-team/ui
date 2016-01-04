@@ -27,15 +27,15 @@ Uploader组件是基于uploadify插件2次开发的组件，提供用户更好�
 * clearQueue 
 * destroy 
 * dialogOpen
-* dialogClose(filesSelected, filesQueued, queueLength)
-* select(file) 
-* selectError(file, errorCode, errorMsg) 
+* dialogClose(event, filesSelected, filesQueued, queueLength)
+* select(event, file) 
+* selectError(event, file, errorCode, errorMsg) 
 * queueComplete 
-* uploadComplete(file) 
-* uploadError(file, errorCode, errorMsg) 
-* uploadProgress(file, fileBytesLoaded, fileTotalBytes) 
-* uploadStart(file) 
-* uploadSuccess(file, data, response)
+* uploadComplete(event, file) 
+* uploadError(event, file, errorCode, errorMsg) 
+* uploadProgress(event, file, fileBytesLoaded, fileTotalBytes) 
+* uploadStart(event, file) 
+* uploadSuccess(event, file, data, response)
 
 ###Api
 
@@ -55,7 +55,7 @@ $('#uploader').uploader({
 	buttonText: '上传文件'
 });
 
-$('#uploader').uploader().on('uploadSuccess', function(file, data){
+$('#uploader').on('uploader:uploadSuccess', function(event, file, data){
 	console.log(file, data);
 });
 ```

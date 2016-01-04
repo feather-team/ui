@@ -37,8 +37,7 @@ var Abstract = {
          */
         on: function(event, callback){
             $.event.add(this, this.getEventName(event), function(){
-                var args = slice.call(arguments, 1);
-                return callback.apply(this, args);
+                return callback.apply(this, arguments);
             });
 
             return this;
@@ -160,6 +159,12 @@ return {
             parent = 'Event';
         }
 
+        if(!prototype.widget){
+            prototype.widget = function(){
+                return this.$element_;
+            };
+        }
+
         klass = this.extend(parent, prototype);
 
         var DATANAME = NAMESPACE_EXTENSTION + name, destroy;
@@ -173,6 +178,19 @@ return {
                 this.off(NAMESPACE);
             };
         }
+
+        //插件触发trigger事件时，自动触发绑定在元素上的自定义事件
+        var trigger = klass.prototype.trigger;
+
+        klass.prototype.trigger = function(event, data){
+            trigger.apply(this, arguments);
+
+            var element;
+
+            if(element = this.widget()){
+                $(element).trigger(name + ':' + event, data);
+            }
+        };
         
         /*
         调用示例：
@@ -196,6 +214,11 @@ return {
             var action, args;
 
             if(typeof options == 'string'){
+                //当第一个参数为instance时，返回组件实例对象
+                if(options == 'instance'){
+                    return this.eq(0).data(DATANAME);
+                }
+
                 action = options;
                 args = slice.call(arguments, 1);
                 options = {};
@@ -213,9 +236,11 @@ return {
 
                     $this.data(DATANAME, instance = new klass(opts));
 
+                    instance.$element_ = $this;
                     //listen memory release
                     instance.on('release', function(){
                         $this.removeData(DATANAME);
+                        instance.$element_ = null;
                         instance = null;
                     });
                 }
@@ -229,7 +254,7 @@ return {
                 }
             });
 
-            return !action ? this.eq(0).data(DATANAME) : this;
+            return this;
         };
 
         return klass;

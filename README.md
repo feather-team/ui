@@ -34,34 +34,56 @@ var mask = new window.jQuery.featherUi.Mask();
 * 和dom相关的组件都被绑定至$.fn上，也就是可以使用这样的方式调用组件了：
 
 ```js
-//1. 调用组件方法时，第一个参数为Object，则会进行初始化，参数会作为options传入组件类中，并返回实例化后的对象
-//2. 调用组件方法时，第一个参数为空时，返回实例化后的对象，如果没有被实例化，则会进行实例化再返回
-//3. 调用组件方法时，第一个参数为String时，则会执行实例化对象后的action操作，并返回jQuery对象，如果没有被实例化，则会进行实例化再返回
-//4. dom元素第一次调用组件时，会与组件绑定关系，并初始化组件，随后调用，则不会进行初始化
-$('#droplist').droplist();
-
-//再次调用返回第一次初始化的droplist对象
-$('#droplist').droplist().on('select', function(){});
-
-//直接在droplist方法内执行droplist的方法，完成后，返回jquery对象
-$('#droplist').droplist('on', 'select', function(){});	//jquery对象
+$('#droplist').droplist({
+	//初始化参数
+}); 
 ```
 
+注：
+
+* 同一个插件调用多次时，不会重复实例化，如果已绑定了插件，则直接返回之前绑定的插件，如未绑定，则直接实例化，如果需重新绑定，部分组件提供了destroy功能，可执行。
+
 ```js
-//同样也可以使用老的方式
-new DropList({
-	dom: '#droplist'
+$('#droplist').droplist()	// => jquery object
+```
+
+* 如果想调用组件自身的方法时，只需要调用组件名，第一个参数为执行的方法名，后续参数传入即可，如：
+
+```js
+$('#droplist').droplist('open')  // => jquery object
+$('#droplist').droplist('on', 'select', function(event, value){
+	console.log(value);
 });
+```
+
+* 也可以直接通过instance魔术方法，获取组件实例化对象
+
+```js
+$('#droplist').droplist('instance')/* => DropList Object*/.getValue(); // => 123
+```
+
+* 实例对象可以通过widget方法，获取绑定的jquery对象
+
+```js
+$('#droplist').droplist('instance').widget().droplist('open') //=> jquery object
 ```
 
 * 和dom相关的组件都支持事件功能，以往使用options传递回调函数的方式也变成了事件的方式，比如：
 
 ```js
-$('#droplist').droplist().on('sayHello', function(){
-	console.log('hello');
+//预先绑定一个事件
+$('#droplist').on('droplist:sayHello', function(event, iSay){
+	console.log('i say:' + iSay);
 });
 
-$('#droplist').droplist().trigger('sayHello');
+//触发事件
+var instance = $('#droplist').droplist('instance');
+
+instance.on('sayHello', function(event, instanceSay){
+	console.log('instance say: ' + instanceSay);
+});
+
+instance.trigger('sayHello', 'hello, world'); //instace say: hello, world \r\n i say: hello, world;
 ```
 这些插件都继承于预定义类Event，更多使用方法可查看[Event](/class)
 

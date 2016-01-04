@@ -10,9 +10,9 @@ Draggable组件
 
 ###Events
 
-*   start(left, top, event)：开始拖拽时触发
-*   drag(left, top, event)： 拖拽时触发
-*   stop(left, top, event)：停止拖拽时触发
+*   start(event, left, top)：开始拖拽时触发
+*   drag(event, left, top)： 拖拽时触发
+*   stop(event, left, top)：停止拖拽时触发
 
 ###Example
 
@@ -20,7 +20,7 @@ Draggable组件
 $('#draggable').draggable({
    handle: '#draggable-handle',
    axis: 'y'
-}).on('start', function(x, y, event){
-   console.log(x, y, event.pageX, event.pageY);
+}).on('draggable:start', function(event, x, y, mouseEvent){
+   console.log(x, y, mouseEvent.pageX, mouseEvent.pageY);
 });
 ```
