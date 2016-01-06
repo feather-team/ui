@@ -219,7 +219,11 @@ return Class.$factory('dialog', {
 		if(self.buttons){
 			self.buttons.empty();
 		}else{
-			self.buttons = self.wraper.find('.ui2-dialog-buttons') || $('<div class="ui2-dialog-buttons">').appendTo(self.wraper);
+			var $buttons = self.wraper.find('.ui2-dialog-buttons');
+			if($buttons.length == 0){
+				$buttons = $('<div class="ui2-dialog-buttons">').appendTo(self.wraper);
+			}
+			self.buttons = $buttons;
 		}
 
 		$.each(buttons, function(index, item){
