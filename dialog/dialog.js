@@ -50,9 +50,7 @@ return Class.$factory('dialog', {
 		}
 
 		self.create();
-		self.options.autoOpen && setTimeout(function(){
-			self.open();
-		}, 0);
+		self.options.autoOpen && self.open();
 	},
 
 	create: function(){
@@ -126,7 +124,7 @@ return Class.$factory('dialog', {
 		}
 
 		self.wraper.appendTo(options.container).addClass(options.className);
-		self.createButtons();
+		self.setButtons();
 	},
 
 	initContent: function(){
@@ -186,15 +184,6 @@ return Class.$factory('dialog', {
 		}
 	},
 
-	createButtons: function(){
-		var self = this;
-
-		if($.isEmptyObject(self.options.buttons)) return;
-
-		self.buttons = $('<div class="ui2-dialog-buttons">').appendTo(self.wraper);
-		self.setButtons(self.options.buttons);
-	},
-
 	/**
 	 *设置buttons组
      *buttons:
@@ -221,8 +210,18 @@ return Class.$factory('dialog', {
 	setButtons: function(buttons){
 		var self = this;
 
-		self.buttons.empty();
-		
+		if(!buttons){
+			buttons = self.options.buttons;
+		}
+
+		if($.isEmptyObject(buttons)) return;
+
+		if(self.buttons){
+			self.buttons.empty();
+		}else{
+			self.buttons = self.wraper.find('.ui2-dialog-buttons') || $('<div class="ui2-dialog-buttons">').appendTo(self.wraper);
+		}
+
 		$.each(buttons, function(index, item){
 			if($.isFunction(item)){
 				item = {
