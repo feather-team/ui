@@ -6,14 +6,32 @@ var doc = document, currentScript;
 if(doc.currentScript){
 	currentScript = doc.currentScript.src;
 }else{
-	var scripts = doc.getElementsByTagName("script");
+	var stack;
 
-	for(var i = scripts.length - 1; i >= 0; i--){
-		var script = scripts[i];
+	try{
+	    currentScript();
+	}catch(e){
+		stack = e.stack;
 
-		if(script.readyState === "interactive"){
-			currentScript = script.src;
-			break;
+	    if(!stack && window.opera){
+	        stack = (String(e).match(/of linked script \S+/g) || []).join(" ");
+	    }
+	}
+
+	if(stack){
+	    stack = stack.split( /[@ ]/g).pop();
+	    stack = stack[0] == "(" ? stack.slice(1,-1) : stack;
+	    currentScript = stack.replace(/(:\d+)?:\d+$/i, "");
+	}else{
+		var scripts = doc.getElementsByTagName("script");
+
+		for(var i = scripts.length - 1; i >= 0; i--){
+			var script = scripts[i];
+
+			if(script.readyState === "interactive"){
+				currentScript = script.src;
+				break;
+			}
 		}
 	}
 }
