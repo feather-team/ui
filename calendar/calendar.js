@@ -161,7 +161,7 @@ var Calendar = Class.$factory('calendar', {
 
 			if($item.hasClass('ui2-calendar-item') && !$item.hasClass('ui2-calendar-item-disable')){
 				if(opt.selectedClassName){
-					self.calendar.find('.ui2-calendar-item').removeClass(opt.selectedClassName);
+					self.cleanSelected();
 					$item.addClass(opt.selectedClassName);
 				}
 				
@@ -305,6 +305,15 @@ var Calendar = Class.$factory('calendar', {
 		self.target && self.ofs(self.target, 'click');
 		self.ofs(window, 'resize scroll');
 		self.ofs(document, 'click');
+	},
+
+	cleanSelected: function(){
+		var self = this, selectedClassName = self.options.selectedClassName;
+
+		if(selectedClassName){
+			self.date = null;
+			self.calendar.find('.ui2-calendar-item').removeClass(selectedClassName);
+		}
 	}
 });
 

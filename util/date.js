@@ -54,7 +54,7 @@ return {
 				case 'n': value = date.getMonth() + 1; break;	
 				case 'd': value = toPad(date.getDate(), 0, 2, true); break;
 				case 'j': value = date.getDate(); break;
-				case 'D': value = date.getDay() + 1; break;
+				case 'D': value = date.getDay(); break;
 				case 'h': value = toPad(date.getHours() % 12, 0, 2, true); break;
 				case 'H': value = toPad(date.getHours(), 0, 2, true); break;
 				case 'i': value = toPad(date.getMinutes(), 0, 2, true); break;
