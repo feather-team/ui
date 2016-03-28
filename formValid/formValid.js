@@ -53,7 +53,7 @@ var FormValid = Class.$factory('formValid', {
 			$.each(dRules, function(key, value){
 				var attr = prefix + key;
 
-				if($element.attr(attr) !== undefined){
+				if($element.attr(attr) != null){
 					var rule = {
 						errorText: $element.attr(attr + '-error') || value.errorText,
 						successText: $element.attr(attr + '-success') || value.successText,
@@ -110,7 +110,7 @@ var FormValid = Class.$factory('formValid', {
 				}
 
 				if(!tmpStatus){
-					self.error(index, tmp.errorText, tmp.showErrorStatus);
+					self.error(index, tmp.errorText, tmp.showErrorStatus || self.options.showErrorStatus);
 					
 					if(errorStop){
 						return status;
@@ -120,14 +120,14 @@ var FormValid = Class.$factory('formValid', {
 				}	
 			} 
 
-			tmpStatus && self.success(index, tmp.successText, tmp.showSuccessStatus);
+			tmpStatus && self.success(index, tmp.successText, tmp.showSuccessStatus || self.options.showSuccessStatus);
         }
 
 		return status;
 	},
 
 	error: function(name, text, showErrorStatus){
-    	if(this.options.showErrorStatus || showErrorStatus){
+    	if(text != null && showErrorStatus !== false){
     		text = text || '';
 			this.setText(name, text || '', 'ui2-formvalid-field-error');   
     	} 
@@ -136,7 +136,7 @@ var FormValid = Class.$factory('formValid', {
     },
 
 	success: function(name, text, showSuccessStatus){
-		if(this.options.showSuccessStatus || showSuccessStatus){
+		if(text != null && showSuccessStatus !== false){
 			text = text || '';
 			this.setText(name, text, 'ui2-formvalid-field-success');	
 		}
@@ -201,7 +201,7 @@ var FormValid = Class.$factory('formValid', {
 
 				if(!s){
 					$.each(FormValid.DEFAULT_RULES, function(dk, dv){
-						if(dk in r){
+						if(r[dk]){
 							_rules.push($.extend({}, r, {
 								rule: dv.rule,
 								errorText: r.errorText || dv.errorText,
