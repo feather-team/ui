@@ -42,7 +42,7 @@ var Suggestion = Class.$factory('suggestion', {
 
 	init: function(){
 		var self = this, opts = self.options;
-
+		self.cache = {};
 		self.dom = $(opts.dom).attr('autocomplete', 'off');
 		self.parent = self.dom.parent();
 
@@ -166,7 +166,7 @@ var Suggestion = Class.$factory('suggestion', {
 
 	match: function(){
 		var self = this, opts = self.options;
-
+		
 		self.cancelMatch();
 
 		//request remote data
@@ -178,14 +178,12 @@ var Suggestion = Class.$factory('suggestion', {
 				return;
 			}
 
-			var data = self.data, cache = opts.caching && !(!$.trim(kw) && opts.emptyNoCache) ? Suggestion.cache[kw] : false;
+			var data = self.data, cache = opts.caching && !(!$.trim(kw) && opts.emptyNoCache) ? self.cache[kw] : false;
 			
 			if(data){
 				if(opts.dataField){
 					data = Util.object.get(data, opts.dataField) || [];
 				}
-
-				console.log(data);
 
 				if((data = self._match.call(self, data, kw)).length){
 					//if kw can be find in local data
@@ -203,7 +201,7 @@ var Suggestion = Class.$factory('suggestion', {
 						data = Util.object.get(data, opts.dataField) || [];
 					}
 					
-					data = Suggestion.cache[kw] = self._match.call(self, data, kw);
+					data = self.cache[kw] = self._match.call(self, data, kw);
 					self.build(data, kw);
 				});
 			}
@@ -284,7 +282,7 @@ var Suggestion = Class.$factory('suggestion', {
 	}
 });
 
-Suggestion.cache = {};
+// Suggestion.cache = {};
 
 Suggestion.isUDEvent = function(e){
 	return e.keyCode == 38 || e.keyCode == 40;

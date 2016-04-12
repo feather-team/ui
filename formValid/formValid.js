@@ -201,7 +201,7 @@ var FormValid = Class.$factory('formValid', {
 
 				if(!s){
 					$.each(FormValid.DEFAULT_RULES, function(dk, dv){
-						if(r[dk]){
+						if(dk in r){
 							_rules.push($.extend({}, r, {
 								rule: dv.rule,
 								errorText: r.errorText || dv.errorText,

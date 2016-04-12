@@ -20,7 +20,8 @@ var Lightbox = Class.$factory('lightbox', {
 		this.options = $.extend({
 			dom: null,
 			selecter: '> img',
-			srcAttr: 'data-lightbox-url'
+			srcAttr: 'data-lightbox-url',
+			altAttr: 'alt'
 		}, opt || {});
 
 		this.init();
@@ -51,7 +52,7 @@ var Lightbox = Class.$factory('lightbox', {
 
 		self.items = $.map(self.doms, function(item, k){
 			return {
-				alt: item.alt,
+				alt: $(item).attr(self.options.altAttr),
 				src: $(item).attr(self.options.srcAttr)
 			};
 		});
@@ -64,7 +65,7 @@ var Lightbox = Class.$factory('lightbox', {
 
 		self.doms.each(function(index){
 			self.o2s(this, 'click', function(){
-				self.open($(this).index());
+				self.open(index);
 				return false;
 			});
 		});
@@ -104,8 +105,16 @@ var Lightbox = Class.$factory('lightbox', {
 		self.next.hide();
 
 		if(!$item.length){
+			var imgLink;
+		
+			if(/\?/.test(item.src)){
+				imgLink = item.src + '&lightbox-random=' + Math.random();
+			}else{
+				imgLink = item.src + '?lightbox-random=' + Math.random();
+			}
+
 			var $img = $('<img />').attr({
-				src: item.src + '?lightbox-random=' + Math.random(),
+				src: imgLink,
 				alt: item.alt,
 				'data-lightbox-index': index
 			}).hide().bind('load error', function(){
