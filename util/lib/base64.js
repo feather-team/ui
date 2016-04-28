@@ -59,7 +59,9 @@
     return output;
   });
 
-  if(typeof define == 'function'){
+  if(typeof module === 'object'){
+    module.exports = object;
+  }else if(typeof define == 'function'){
     //seajs or requirejs environment
     define(function(){
       return object;

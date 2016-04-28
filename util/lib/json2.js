@@ -486,7 +486,9 @@ if (!JSON) {
     }
 }());
 
-if(typeof define == 'function'){
+if(typeof module === 'object'){
+    module.exports = JSON;
+}else if(typeof define == 'function'){
     //seajs or requirejs environment
     define(function(){
         return JSON;
