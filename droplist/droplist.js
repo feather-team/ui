@@ -8,237 +8,237 @@ if(typeof define == 'function'){
         );
     });
 }else{
-	window.jQuery.featherUi = window.jQuery.featherUi || {};
-	window.jQuery.featherUi.DropList = factory(window.jQuery || window.$, window.jQuery.featherUi.Class);
+    window.jQuery.featherUi = window.jQuery.featherUi || {};
+    window.jQuery.featherUi.DropList = factory(window.jQuery || window.$, window.jQuery.featherUi.Class);
 }
 })(window, function($, Class){
 
 var DropList = Class.$factory('droplist', {
-	initialize: function(opt){
-		this.options = $.extend({
-			items: {},
-			list: null,
-			dom: null,
-			container: document.body,
-			width: false,
-			height: false,
-			hover: true,
-			defaultValue: null,
-			selectedClassName: ''
-		}, opt || {});
+    initialize: function(opt){
+        this.options = $.extend({
+            items: {},
+            list: null,
+            dom: null,
+            container: document.body,
+            width: false,
+            height: false,
+            hover: true,
+            defaultValue: null,
+            selectedClassName: ''
+        }, opt || {});
 
-		this.init();
-	},
+        this.init();
+    },
 
-	init: function(){
-		var self = this, opts = self.options;
+    init: function(){
+        var self = this, opts = self.options;
 
-		self.value = '';
+        self.value = '';
 
-		self.wraper = $('<div class="ui2-droplist"><i class="ui2-droplist-arrow"></i></div>').appendTo(opts.container);
-		self.select = $('<span class="ui2-droplist-select"></span>').appendTo(self.wraper);
-		self.list = $('<ul class="ui2-droplist-list"></ul>').appendTo(self.wraper);
+        self.wraper = $('<div class="ui2-droplist"><i class="ui2-droplist-arrow"></i></div>').appendTo(opts.container);
+        self.select = $('<span class="ui2-droplist-select"></span>').appendTo(self.wraper);
+        self.list = $('<ul class="ui2-droplist-list"></ul>').appendTo(self.wraper);
 
-		self.dom = opts.dom ? $(opts.dom) : null;
-		self.setList(opts.dom || opts.list || opts.items, opts.defaultValue);
-		self.isHide = true;
+        self.dom = opts.dom ? $(opts.dom) : null;
+        self.setList(opts.dom || opts.list || opts.items, opts.defaultValue);
+        self.isHide = true;
 
-		self.initSize();
-		self.initEvent();
-	},
+        self.initSize();
+        self.initEvent();
+    },
 
-	initEvent: function(){
-		var self = this, opts = self.options;
+    initEvent: function(){
+        var self = this, opts = self.options;
 
-		if(self.options.hover){
-			self.wraper.hover($.proxy(self.open, self), $.proxy(self.close, self));
-		}else{
-			self.select.click(function(){
-				self.isHide ? self.open() : self.close();
-			});
-			self.wraper.click(function(e){
-				e.stopPropagation();
-			});
+        if(self.options.hover){
+            self.wraper.hover($.proxy(self.open, self), $.proxy(self.close, self));
+        }else{
+            self.select.click(function(){
+                self.isHide ? self.open() : self.close();
+            });
+            self.wraper.click(function(e){
+                e.stopPropagation();
+            });
 
-			self.o2s(document, 'click', function(){
-				!self.isHide && self.close();
-			});
-		}
+            self.o2s(document, 'click', function(){
+                !self.isHide && self.close();
+            });
+        }
 
-		self.list.delegate('.ui2-droplist-item', 'click', function(){
-			var $this = $(this);
-			var key = $this.attr('data-droplist-key'), value = $this.attr('data-droplist-value');
+        self.list.delegate('.ui2-droplist-item', 'click', function(){
+            var $this = $(this);
+            var key = $this.attr('data-droplist-key'), value = $this.attr('data-droplist-value');
 
-			self.close();
-			self.trigger('select', [key, value]);
-			self.setValue(value, key);
-		});
-	},
+            self.close();
+            self.trigger('select', [key, value]);
+            self.setValue(value, key);
+        });
+    },
 
-	open: function(){
-		var self = this;
+    open: function(){
+        var self = this;
 
-		if(!self.wraper.hasClass('ui2-droplist-disabled')){
-			self.wraper.addClass('ui2-droplist-open');
-			self.resetWidth();
-			self.isHide = false;
-			self.trigger('open');
-		}
-	},
+        if(!self.wraper.hasClass('ui2-droplist-disabled')){
+            self.wraper.addClass('ui2-droplist-open');
+            self.resetWidth();
+            self.isHide = false;
+            self.trigger('open');
+        }
+    },
 
-	close: function(){
-		var self = this;
+    close: function(){
+        var self = this;
 
-		if(!self.wraper.hasClass('ui2-droplist-disabled')){
-			self.wraper.removeClass('ui2-droplist-open');
-			self.isHide = true;
-			self.trigger('close');
-		}
-	},
+        if(!self.wraper.hasClass('ui2-droplist-disabled')){
+            self.wraper.removeClass('ui2-droplist-open');
+            self.isHide = true;
+            self.trigger('close');
+        }
+    },
 
-	setList: function(list, defaultValue, defaultKey){
-		var self = this, $dom;
+    setList: function(list, defaultValue, defaultKey){
+        var self = this, $dom;
 
-		if(list.nodeType || list instanceof $ || typeof list == 'string'){
-			$dom = $(list);
-			list = self.dom2list(list);
-		}
+        if(list.nodeType || list instanceof $ || typeof list == 'string'){
+            $dom = $(list);
+            list = self.dom2list(list);
+        }
 
-		self.list.html(DropList.createListHtml(list));
-		self.initSize();
+        self.list.html(DropList.createListHtml(list));
+        self.initSize();
 
-		self.dom && (!$dom || $dom[0] !== self.dom[0]) && self.resetDom(list);
+        self.dom && (!$dom || $dom[0] !== self.dom[0]) && self.resetDom(list);
 
-		if(defaultValue){
-			self.setValue(defaultValue, defaultKey);
-		}else{
-			var $first = $('.ui2-droplist-item:first', self.list);
-			self.setValue($first.attr('data-droplist-value'), $first.attr('data-droplist-key'));
-		}
-	},
+        if(defaultValue){
+            self.setValue(defaultValue, defaultKey);
+        }else{
+            var $first = $('.ui2-droplist-item:first', self.list);
+            self.setValue($first.attr('data-droplist-value'), $first.attr('data-droplist-key'));
+        }
+    },
 
-	resetDom: function(list){
-		this.dom.html(DropList.createDomHtml(list));
-	},
+    resetDom: function(list){
+        this.dom.html(DropList.createDomHtml(list));
+    },
 
-	resetWidth: function(){
-		var self = this;
+    resetWidth: function(){
+        var self = this;
 
-		self.list.css('width', 'auto');
-		self.wraper.add(self.list).css('width', self.options.width || self.list.width());
-	},
+        self.list.css('width', 'auto');
+        self.wraper.add(self.list).css('width', self.options.width || self.list.width());
+    },
 
-	initSize: function(){
-		var self = this, height = self.options.height;
+    initSize: function(){
+        var self = this, height = self.options.height;
 
-		self.resetWidth();
+        self.resetWidth();
 
-		if(!height) return;
+        if(!height) return;
 
-		height = parseInt(height);
-		self.wraper.find('.ui2-droplist-arrow').css('top', parseInt((height - DropList.ARROW_WIDTH)/2));
-		self.wraper.css('height', height);
-		self.wraper.find('.ui2-droplist-select, .ui2-droplist-group-label, .ui2-droplist-item-txt').css('line-height', height + 'px');
-		self.list.css('top', height);
-	},
+        height = parseInt(height);
+        self.wraper.find('.ui2-droplist-arrow').css('top', parseInt((height - DropList.ARROW_WIDTH)/2));
+        self.wraper.css('height', height);
+        self.wraper.find('.ui2-droplist-select, .ui2-droplist-group-label, .ui2-droplist-item-txt').css('line-height', height + 'px');
+        self.list.css('top', height);
+    },
 
-	setValue: function(value, key){
-		var self = this;
+    setValue: function(value, key){
+        var self = this;
 
-		var $dom = self.list.find('[data-droplist-value="' + value + '"]');
+        var $dom = self.list.find('[data-droplist-value="' + value + '"]');
 
-		if($dom.length){
-			var cn = self.options.selectedClassName;
+        if($dom.length){
+            var cn = self.options.selectedClassName;
 
-			if(cn){
-				self.list.find('.ui2-droplist-item-txt').removeClass(cn);
-				$dom.find('.ui2-droplist-item-txt').addClass(cn);
-			}
-			
-			if(!key){
-				key = $dom.attr('data-droplist-key');
-			}	
-		}
+            if(cn){
+                self.list.find('.ui2-droplist-item-txt').removeClass(cn);
+                $dom.find('.ui2-droplist-item-txt').addClass(cn);
+            }
+            
+            if(!key){
+                key = $dom.attr('data-droplist-key');
+            }    
+        }
 
-		self.select.html(key);
-		self.value = value;
-		self.dom && self.dom.val(value);
-	},
+        self.select.html(key);
+        self.value = value;
+        self.dom && self.dom.val(value);
+    },
 
-	getValue: function(){
-		return this.value;
-	},
+    getValue: function(){
+        return this.value;
+    },
 
-	dom2list: function(dom, ungroup){
-		var obj = {}, self = this;
+    dom2list: function(dom, ungroup){
+        var obj = {}, self = this;
 
-		if(!ungroup){
-			$('> optgroup', dom).each(function(){
-				obj[$(this).attr('label')] = self.dom2list(this, true);
-			});
-		}
+        if(!ungroup){
+            $('> optgroup', dom).each(function(){
+                obj[$(this).attr('label')] = self.dom2list(this, true);
+            });
+        }
 
-		$('> option', dom).each(function(){
-			obj[$(this).html()] = this.value;
-		});
+        $('> option', dom).each(function(){
+            obj[$(this).html()] = this.value;
+        });
 
-		return obj;
-	},
+        return obj;
+    },
 
-	disable: function(){
-		var self = this;
+    disable: function(){
+        var self = this;
 
-		self.wraper.addClass('ui2-droplist-disabled');
-		self.dom && self.dom.attr('disabled', true);
-	},
+        self.wraper.addClass('ui2-droplist-disabled');
+        self.dom && self.dom.attr('disabled', true);
+    },
 
-	enable: function(){
-		var self = this;
+    enable: function(){
+        var self = this;
 
-		self.wraper.addClass('ui2-droplist-disabled');
-		self.dom && self.dom.removeAttr('disabled');
-	},
+        self.wraper.addClass('ui2-droplist-disabled');
+        self.dom && self.dom.removeAttr('disabled');
+    },
 
-	destroy: function(){
-		var self = this;
+    destroy: function(){
+        var self = this;
 
-		self.wraper.remove();
-		self.ofs(document, 'click');
-		self.dom && (self.dom = null);
-	}
+        self.wraper.remove();
+        self.ofs(document, 'click');
+        self.dom && (self.dom = null);
+    }
 });
 
 DropList.createListHtml = function(list){
-	var html = [];
+    var html = [];
 
-	$.each(list, function(key, item){
-		if(typeof item == 'object' && item){
-			html.push('\
-				<li class="ui2-droplist-group">\
-					<span href="javascript:;" class="ui2-droplist-group-label">' + key + '</span>\
-					<ul>' + DropList.createListHtml(item) + '</ul>\
-				</li>'
-			);
-		}else{
-			html.push('<li class="ui2-droplist-item" data-droplist-key="' + key + '" data-droplist-value="' + item + '"><a href="javascript:;" class="ui2-droplist-item-txt">' + key + '</a></li>');
-		}
-	});
+    $.each(list, function(key, item){
+        if(typeof item == 'object' && item){
+            html.push('\
+                <li class="ui2-droplist-group">\
+                    <span href="javascript:;" class="ui2-droplist-group-label">' + key + '</span>\
+                    <ul>' + DropList.createListHtml(item) + '</ul>\
+                </li>'
+            );
+        }else{
+            html.push('<li class="ui2-droplist-item" data-droplist-key="' + key + '" data-droplist-value="' + item + '"><a href="javascript:;" class="ui2-droplist-item-txt">' + key + '</a></li>');
+        }
+    });
 
-	return html.join('');
+    return html.join('');
 };
 
 DropList.createDomHtml = function(list){
-	var html = [];
+    var html = [];
 
-	$.each(list, function(key, item){
-		if(typeof item == 'object' && item){
-			html.push('<optgroup label="' + key + '">' + DropList.createDomHtml(item) + '</optgroup>');
-		}else{
-			html.push('<option value="' + item + '">' + key + '</option>');
-		}
-	});
+    $.each(list, function(key, item){
+        if(typeof item == 'object' && item){
+            html.push('<optgroup label="' + key + '">' + DropList.createDomHtml(item) + '</optgroup>');
+        }else{
+            html.push('<option value="' + item + '">' + key + '</option>');
+        }
+    });
 
-	return html.join('');
+    return html.join('');
 };
 
 DropList.ARROW_WIDTH = 5;

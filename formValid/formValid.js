@@ -9,70 +9,70 @@ if(typeof define == 'function'){
     });
 }else{
     window.jQuery.featherUi = window.jQuery.featherUi || {};
-	window.jQuery.featherUi.FormValid = factory(window.jQuery || window.$, window.jQuery.featherUi.Class);
+    window.jQuery.featherUi.FormValid = factory(window.jQuery || window.$, window.jQuery.featherUi.Class);
 }
 })(window, function($, Class){
 var FormValid = Class.$factory('formValid', {
-	initialize: function(opt){
-		this.options = $.extend({
-			dom: null,
-			rules: {},
-			showSuccessStatus: false,
-			showErrorStatus: true,
-			errorStop: false,
-			skipHidden: false
-		}, opt || {});
+    initialize: function(opt){
+        this.options = $.extend({
+            dom: null,
+            rules: {},
+            showSuccessStatus: false,
+            showErrorStatus: true,
+            errorStop: false,
+            skipHidden: false
+        }, opt || {});
 
-		this.init();
-	},
+        this.init();
+    },
 
-	init: function(){
-		this.dom = $(this.options.dom);
-		this.rules = {};
-		this.setRules();
-		this.reset();
-	},
+    init: function(){
+        this.dom = $(this.options.dom);
+        this.rules = {};
+        this.setRules();
+        this.reset();
+    },
 
-	setRules: function(rules){
-		var self = this,
-			dRules = FormValid.DEFAULT_RULES, prefix = FormValid.ATTRIBUTE_PREFIX,
-			aLen = FormValid.ATTIBUTE_LENGTH, aRule = FormValid.ATTRIBUTE_RULE;
+    setRules: function(rules){
+        var self = this,
+            dRules = FormValid.DEFAULT_RULES, prefix = FormValid.ATTRIBUTE_PREFIX,
+            aLen = FormValid.ATTIBUTE_LENGTH, aRule = FormValid.ATTRIBUTE_RULE;
 
-		if(rules){
-			self.options.rules = rules;
-		}
+        if(rules){
+            self.options.rules = rules;
+        }
 
-		self.removeRule();
-		self.getElement().each(function(){
-			var name = this.name;
+        self.removeRule();
+        self.getElement().each(function(){
+            var name = this.name;
 
-			if(!name) return;
+            if(!name) return;
 
-			var $element = $(this);
+            var $element = $(this);
 
-			$.each(dRules, function(key, value){
-				var attr = prefix + key;
+            $.each(dRules, function(key, value){
+                var attr = prefix + key;
 
-				if($element.attr(attr) != null){
-					var rule = {
-						errorText: $element.attr(attr + '-error') || value.errorText,
-						successText: $element.attr(attr + '-success') || value.successText,
-						standard: $element.attr(attr)
-					};
+                if($element.attr(attr) != null){
+                    var rule = {
+                        errorText: $element.attr(attr + '-error') || value.errorText,
+                        successText: $element.attr(attr + '-success') || value.successText,
+                        standard: $element.attr(attr)
+                    };
 
-					rule[key] = $element.attr(attr);
-					self.addRule(name, rule);
-				}
-			});
-		});
+                    rule[key] = $element.attr(attr);
+                    self.addRule(name, rule);
+                }
+            });
+        });
 
-		self.addRule(self.options.rules);
-	},
+        self.addRule(self.options.rules);
+    },
 
-	check: function(name){
-		var self = this, status = true, rules = self.rules, errorStop = self.options.errorStop, skipHidden = self.options.skipHidden, tmpRules;
+    check: function(name){
+        var self = this, status = true, rules = self.rules, errorStop = self.options.errorStop, skipHidden = self.options.skipHidden, tmpRules;
 
-		self.reset(name, false);
+        self.reset(name, false);
 
         if(name){
             tmpRules = {};
@@ -82,235 +82,235 @@ var FormValid = Class.$factory('formValid', {
         }
 
         for(var index in tmpRules){
-        	var $tmp = self.getElement(index);
+            var $tmp = self.getElement(index);
 
-			if(!$tmp.length || $tmp.is(':disabled') || $tmp.is(':hidden') && skipHidden) continue;
-			
-			var item = tmpRules[index],
-				value = FormValid.isCheckBtn($tmp) ? $tmp.filter(':checked').val() : $tmp.val(),
-        		tmpStatus = true;
+            if(!$tmp.length || $tmp.is(':disabled') || $tmp.is(':hidden') && skipHidden) continue;
+            
+            var item = tmpRules[index],
+                value = FormValid.isCheckBtn($tmp) ? $tmp.filter(':checked').val() : $tmp.val(),
+                tmpStatus = true;
 
-        	if(value == null){
-        		value = '';
-        	}
+            if(value == null){
+                value = '';
+            }
 
-			if(!$.isArray(item)){
-				item = [item];
-			}
+            if(!$.isArray(item)){
+                item = [item];
+            }
 
-			var tmp;
+            var tmp;
 
-			for(var i = 0; i < item.length; i++){
-				tmp = item[i];
+            for(var i = 0; i < item.length; i++){
+                tmp = item[i];
 
-				if(typeof tmp.rule == 'function' && !tmp.rule.call(this, value, index, tmp.standard)){
-					status = false; tmpStatus = false;
-				}else if(tmp.rule.constructor == RegExp && !tmp.rule.test(value)){
-					status = false; tmpStatus = false;
-				}
+                if(typeof tmp.rule == 'function' && !tmp.rule.call(this, value, index, tmp.standard)){
+                    status = false; tmpStatus = false;
+                }else if(tmp.rule.constructor == RegExp && !tmp.rule.test(value)){
+                    status = false; tmpStatus = false;
+                }
 
-				if(!tmpStatus){
-					self.error(index, tmp.errorText, tmp.showErrorStatus || self.options.showErrorStatus);
-					
-					if(errorStop){
-						return status;
-					}
+                if(!tmpStatus){
+                    self.error(index, tmp.errorText, tmp.showErrorStatus || self.options.showErrorStatus);
+                    
+                    if(errorStop){
+                        return status;
+                    }
 
-					break;
-				}	
-			} 
+                    break;
+                }    
+            } 
 
-			tmpStatus && self.success(index, tmp.successText, tmp.showSuccessStatus || self.options.showSuccessStatus);
+            tmpStatus && self.success(index, tmp.successText, tmp.showSuccessStatus || self.options.showSuccessStatus);
         }
 
-		return status;
-	},
-
-	error: function(name, text, showErrorStatus){
-    	if(text != null && showErrorStatus !== false){
-    		text = text || '';
-			this.setText(name, text || '', 'ui2-formvalid-field-error');   
-    	} 
-
-    	this.trigger('error', [name, text]);
+        return status;
     },
 
-	success: function(name, text, showSuccessStatus){
-		if(text != null && showSuccessStatus !== false){
-			text = text || '';
-			this.setText(name, text, 'ui2-formvalid-field-success');	
-		}
+    error: function(name, text, showErrorStatus){
+        if(text != null && showErrorStatus !== false){
+            text = text || '';
+            this.setText(name, text || '', 'ui2-formvalid-field-error');   
+        } 
 
-		this.trigger('success', [name, text]);
-	},
+        this.trigger('error', [name, text]);
+    },
 
-	setText: function(name, text, classname){
-		var $parent = this.getElement(name).parent();
+    success: function(name, text, showSuccessStatus){
+        if(text != null && showSuccessStatus !== false){
+            text = text || '';
+            this.setText(name, text, 'ui2-formvalid-field-success');    
+        }
 
-		$parent.find('.ui2-formvalid-field[data-formvalid-target="' + name + '"]').remove();
+        this.trigger('success', [name, text]);
+    },
 
-		if(text != null){
-			$parent.append('<span class="ui2-formvalid-field ' + classname + '" data-formvalid-target="' + name + '">' + (text || '&nbsp;') + '</span>');
-		}
-	},
+    setText: function(name, text, classname){
+        var $parent = this.getElement(name).parent();
 
-	reset: function(name, _default){
-		var self = this;
+        $parent.find('.ui2-formvalid-field[data-formvalid-target="' + name + '"]').remove();
 
-		if(name){
-			var text; 
+        if(text != null){
+            $parent.append('<span class="ui2-formvalid-field ' + classname + '" data-formvalid-target="' + name + '">' + (text || '&nbsp;') + '</span>');
+        }
+    },
 
-			if(_default == null || _default){
-				text = self.getElement(name).attr(FormValid.ATTRIBUTE_DEFAULT);
-			}
+    reset: function(name, _default){
+        var self = this;
+
+        if(name){
+            var text; 
+
+            if(_default == null || _default){
+                text = self.getElement(name).attr(FormValid.ATTRIBUTE_DEFAULT);
+            }
             
             self.setText(name, text, 'ui2-formvalid-field-default');
         }else{
             self.getElement().each(function(){
-            	var name = this.name;
+                var name = this.name;
 
-            	if(!name) return;
+                if(!name) return;
 
-				if(_default == null || _default){
-					text = $(this).attr(FormValid.ATTRIBUTE_DEFAULT);
-				}
+                if(_default == null || _default){
+                    text = $(this).attr(FormValid.ATTRIBUTE_DEFAULT);
+                }
 
-				self.setText(name, text, 'ui2-formvalid-field-default');
-        	});
+                self.setText(name, text, 'ui2-formvalid-field-default');
+            });
         }
-	},
+    },
 
-	addRule: function(name, rule){
-		var self = this;
+    addRule: function(name, rule){
+        var self = this;
 
-		if(typeof name == 'object'){
-			$.each(name, function(k, rules){
-				self.addRule(k, rules);
-			});
-		}else{
-			var rules = self.rules[name] || [];
+        if(typeof name == 'object'){
+            $.each(name, function(k, rules){
+                self.addRule(k, rules);
+            });
+        }else{
+            var rules = self.rules[name] || [];
 
-			if(!$.isArray(rules)){
-				rules = [rules];
-			}
+            if(!$.isArray(rules)){
+                rules = [rules];
+            }
 
-			var _rules = [];
+            var _rules = [];
 
-			$.each($.makeArray(rule), function(k, r){
-				var s = r.rule;
+            $.each($.makeArray(rule), function(k, r){
+                var s = r.rule;
 
-				if(!s){
-					$.each(FormValid.DEFAULT_RULES, function(dk, dv){
-						if(dk in r){
-							_rules.push($.extend({}, r, {
-								rule: dv.rule,
-								errorText: r.errorText || dv.errorText,
-								standard: r[dk]
-							}));
-						}
-					});
-				}else{
-					_rules.push(r);
-				}
-			});
+                if(!s){
+                    $.each(FormValid.DEFAULT_RULES, function(dk, dv){
+                        if(dk in r){
+                            _rules.push($.extend({}, r, {
+                                rule: dv.rule,
+                                errorText: r.errorText || dv.errorText,
+                                standard: r[dk]
+                            }));
+                        }
+                    });
+                }else{
+                    _rules.push(r);
+                }
+            });
 
-			rules.push.apply(rules, _rules);
-			self.rules[name] = rules;
-		}
-	},
+            rules.push.apply(rules, _rules);
+            self.rules[name] = rules;
+        }
+    },
 
-	removeRule: function(name){
-		if(name){
-			delete this.rules[name];
-		}else{
-			this.rules = {};
-		}
-	},
+    removeRule: function(name){
+        if(name){
+            delete this.rules[name];
+        }else{
+            this.rules = {};
+        }
+    },
 
-	getElement: function(name){
-		return name ? this.dom.find('[name="' + name + '"]') : this.dom.find('[name]');
-	}
+    getElement: function(name){
+        return name ? this.dom.find('[name="' + name + '"]') : this.dom.find('[name]');
+    }
 });
 
 $.extend(FormValid, {
-	ATTRIBUTE_PREFIX: 'data-formvalid-',
+    ATTRIBUTE_PREFIX: 'data-formvalid-',
 
-	DEFAULT_RULES: {
-		required: {
-			rule: /\S+/,
-			errorText: '该字段必填'
-		},
+    DEFAULT_RULES: {
+        required: {
+            rule: /\S+/,
+            errorText: '该字段必填'
+        },
 
-		email: {
-			rule: /^(?:\w[\w_-]*@[\w_-]+(?:\.[\w_-]+)+|\S+)$/i,
-			errorText: '邮箱地址格式错误'
-		},
+        email: {
+            rule: /^(?:\w[\w_-]*@[\w_-]+(?:\.[\w_-]+)+|\S+)$/i,
+            errorText: '邮箱地址格式错误'
+        },
 
-		mobile: {
-			rule: /^\d{11}$/,
-			errorText: '手机号码格式错误'
-		},
+        mobile: {
+            rule: /^\d{11}$/,
+            errorText: '手机号码格式错误'
+        },
 
-		idcard: {
-			rule: /^(?:\d{14}|\d{17})[\dx]$/i,
-			errorText: '身份证格式错误'
-		},
+        idcard: {
+            rule: /^(?:\d{14}|\d{17})[\dx]$/i,
+            errorText: '身份证格式错误'
+        },
 
-		number: {
-			rule: /^(?:\d+(?:\.\d+)?)$/,
-			errorText: '该字段必须为数字'
-		},
+        number: {
+            rule: /^(?:\d+(?:\.\d+)?)$/,
+            errorText: '该字段必须为数字'
+        },
 
-		range: {
-			rule: function(value, name, r){
-				if($.trim(value) == '') return true;
+        range: {
+            rule: function(value, name, r){
+                if($.trim(value) == '') return true;
 
-				r = r.replace(/\s+/g, '').split(',');
+                r = r.replace(/\s+/g, '').split(',');
 
-				if(r[0] && value < r[0]){
-					return false; 
-				}
+                if(r[0] && value < r[0]){
+                    return false; 
+                }
 
-				if(r[1] && value > r[1]){
-					return false;
-				}
+                if(r[1] && value > r[1]){
+                    return false;
+                }
 
-				return true;
-			},
-			errorText: '字段输入范围错误'
-		},
+                return true;
+            },
+            errorText: '字段输入范围错误'
+        },
 
-		length: {
-			rule: function(value, name, r){
-				if($.trim(value) == '') return true;
+        length: {
+            rule: function(value, name, r){
+                if($.trim(value) == '') return true;
 
-				r = r.replace(/\s+/g, '').split(',');
-				
-				var l = String(value).length;
+                r = r.replace(/\s+/g, '').split(',');
+                
+                var l = String(value).length;
 
-				if(r[0] && l < r[0]){
-					return false;
-				}
+                if(r[0] && l < r[0]){
+                    return false;
+                }
 
-				if(r[1] == null){
-					return l == r[0];
-				}
+                if(r[1] == null){
+                    return l == r[0];
+                }
 
-				if(r[1] && l > r[1]){
-					return false;
-				}
+                if(r[1] && l > r[1]){
+                    return false;
+                }
 
-				return true;
-			},
-			errorText: '字段输入长度错误'
-		}
-	}
+                return true;
+            },
+            errorText: '字段输入长度错误'
+        }
+    }
 });
 
 FormValid.ATTRIBUTE_DEFAULT = FormValid.ATTRIBUTE_PREFIX + 'default';
 
 FormValid.isCheckBtn = function($ele){
-	return $ele.length && /checkbox|radio/i.test($ele.attr('type'));
+    return $ele.length && /checkbox|radio/i.test($ele.attr('type'));
 };
 
 return FormValid;
