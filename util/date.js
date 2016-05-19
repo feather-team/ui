@@ -1,9 +1,5 @@
 ;(function(window, factory){
-if(typeof module === 'object'){
-    module.exports = factory(
-        require('./string.js')
-    );
-}else if(typeof define == 'function'){
+if(typeof define == 'function'){
     //seajs or requirejs environment
     define(function(require, exports, module){
         return factory(
@@ -55,10 +51,10 @@ return {
                 case 'Y': value = date.getFullYear(); break;
                 case 'y': value = String(date.getFullYear()).substring(0, 2); break;
                 case 'm': value = toPad(date.getMonth() + 1, 0, 2, true); break;
-                case 'n': value = date.getMonth() + 1; break;    
+                case 'n': value = date.getMonth() + 1; break;   
                 case 'd': value = toPad(date.getDate(), 0, 2, true); break;
                 case 'j': value = date.getDate(); break;
-                case 'D': value = date.getDay(); break;
+                case 'D': value = date.getDay() + 1; break;
                 case 'h': value = toPad(date.getHours() % 12, 0, 2, true); break;
                 case 'H': value = toPad(date.getHours(), 0, 2, true); break;
                 case 'i': value = toPad(date.getMinutes(), 0, 2, true); break;
@@ -74,7 +70,19 @@ return {
         }
 
         return temp.join('');
-    }    
+    },
+    compareDate: function(a,b){
+        //input a&b in date format,see Date.parse()
+        var MS_PER_DAY = 24*60*60*1000,
+            offset;
+        var timea = Date.parse(a),
+            timeb = Date.parse(b);
+
+        if(isNaN(timea) || isNaN(timeb)) return;
+        offset = (timea - timeb) / MS_PER_DAY;
+
+        return Math.floor(offset);
+    }       
 };
 
 });
