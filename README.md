@@ -17,7 +17,7 @@ feather-ui兼容了模块化，以及传统方式使用，如果是非模块下�
 <script src="/static/mask.js"></script>
 
 <script>
-var mask = new window.jQuery.featherUi.Mask();
+var mask = new window.jQuery.featherUi.Mask(); 
 </script>
 ```
 
