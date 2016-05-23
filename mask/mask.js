@@ -65,8 +65,8 @@ return Class.$factory('mask', {
         var container = this.container[0];
 
         this.mask.css({
-            width: container.scrollWidth || doc.docElement.scrollWidth,
-            height: container.scrollHeight || doc.docElement.scrollHeight
+            width: container.scrollWidth || doc.documentElement.scrollWidth,
+            height: container.scrollHeight || doc.documentElement.scrollHeight
         });
     },
 
