@@ -87,6 +87,7 @@ instance.trigger('sayHello', 'hello, world'); //instace say: hello, world \r\n i
 ```
 这些插件都继承于预定义类Event，更多使用方法可查看[Event](/class)
 
+
 ###组件列表
 * [Dialog](/dialog)
 * [Tips](/tips)
