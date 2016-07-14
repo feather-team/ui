@@ -1,15 +1,15 @@
 ;(function(window, factory){
-if(typeof module === 'object'){
-    module.exports = factory(
-        require('./lib/json2.js')
-    );
-}else if(typeof define == 'function'){
+if(typeof define == 'function'){
     //seajs or requirejs environment
     define(function(require, exports, module){
         return factory(
             require('./lib/json2.js')
         );
     });
+}else if(typeof module === 'object'){
+    module.exports = factory(
+        require('./lib/json2.js')
+    );
 }else{
     window.jQuery.featherUi = window.jQuery.featherUi || {};
     window.jQuery.featherUi.Util = window.jQuery.featherUi.Util || {};

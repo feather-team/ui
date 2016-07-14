@@ -1,11 +1,5 @@
 ;(function(window, factory){
-if(typeof module === 'object'){
-    module.exports = factory(
-        require('./lib/crypto.js'),
-        require('./lib/base64.js'),
-        require('./object.js')
-    );
-}else if(typeof define == 'function'){
+if(typeof define == 'function'){
     //seajs or requirejs environment
     define(function(require, exports, module){
         return factory(
@@ -14,6 +8,12 @@ if(typeof module === 'object'){
             require('./object.js')
         );
     });
+}else if(typeof module === 'object'){
+    module.exports = factory(
+        require('./lib/crypto.js'),
+        require('./lib/base64.js'),
+        require('./object.js')
+    );
 }else{
     window.jQuery.featherUi = window.jQuery.featherUi || {};
     window.jQuery.featherUi.Util = window.jQuery.featherUi.Util || {};

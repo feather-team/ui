@@ -1,11 +1,11 @@
 ;(function(window, factory){
-if(typeof module === 'object'){
-    module.exports = factory();
-}else if(typeof define == 'function'){
+if(typeof define == 'function'){
     //seajs or requirejs environment
     define(function(require, exports, module){
         return factory();
     });
+}else if(typeof module === 'object'){
+    module.exports = factory();
 }else{
     window.jQuery.featherUi = window.jQuery.featherUi || {};
     window.jQuery.featherUi.Template = factory();

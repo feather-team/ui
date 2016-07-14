@@ -15,13 +15,13 @@
 (function( global, factory ) {
     factory( global );
 
-    if ( typeof module === "object" ) {
-        module.exports = window.$ || window.jQuery;
-    } else if ( typeof define === "function" ) {
+    if ( typeof define === "function" ) {
         define(function() {
             return window.$ || window.jQuery;
         });
-    }
+    } else if ( typeof module === "object" ) {
+        module.exports = window.$ || window.jQuery;
+    } 
 // Pass this if window is not defined yet
 }(typeof window !== "undefined" ? window : this, function( window, noGlobal ) {
 

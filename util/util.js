@@ -1,12 +1,5 @@
 ;(function(window){
-if(typeof module === 'object'){
-    module.exports = {
-        object: require('./object.js'),
-        number: require('./number.js'),
-        string: require('./string.js'),
-        date: require('./date.js')
-    };
-}else if(typeof define == 'function'){
+if(typeof define == 'function'){
     //seajs or requirejs environment
     define(function(require, exports, module){
         return {
@@ -16,6 +9,13 @@ if(typeof module === 'object'){
             date: require('./date.js')
         };
     });
+}else if(typeof module === 'object'){
+    module.exports = {
+        object: require('./object.js'),
+        number: require('./number.js'),
+        string: require('./string.js'),
+        date: require('./date.js')
+    };
 }else{
     window.jQuery.featherUi = window.jQuery.featherUi || {};
     window.jQuery.featherUi.Util = window.jQuery.featherUi.Util || {};

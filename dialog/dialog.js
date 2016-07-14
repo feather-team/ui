@@ -1,11 +1,5 @@
 ;(function(window, factory){
-if(typeof module === 'object'){
-    module.exports = factory(
-        require('../jquery/jquery.js'),
-        require('../class/class.js'),
-        require('../mask/mask.js')
-    );
-}else if(typeof define == 'function'){
+if(typeof define == 'function'){
     //seajs or requirejs environment
     define(function(require, exports, module){
         return factory(
@@ -14,6 +8,12 @@ if(typeof module === 'object'){
             require('../mask/mask.js')
         );
     });
+}else if(typeof module === 'object'){
+    module.exports = factory(
+        require('../jquery/jquery.js'),
+        require('../class/class.js'),
+        require('../mask/mask.js')
+    );
 }else{
     window.jQuery.featherUi = window.jQuery.featherUi || {};
     window.jQuery.featherUi.Dialog = factory(window.jQuery || window.$, window.jQuery.featherUi.Class, window.jQuery.featherUi.Mask);

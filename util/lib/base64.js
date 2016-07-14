@@ -59,13 +59,13 @@
     return output;
   });
 
-  if(typeof module === 'object'){
-    module.exports = object;
-  }else if(typeof define == 'function'){
+  if(typeof define == 'function'){
     //seajs or requirejs environment
     define(function(){
       return object;
     });
+  }else if(typeof module === 'object'){
+    module.exports = object;
   }else{
     object = this;
   }

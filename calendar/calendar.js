@@ -1,12 +1,5 @@
 ;(function(window, factory){
-if(typeof module === 'object'){
-    module.exports = factory(
-        require('../jquery/jquery.js'),
-        require('../class/class.js'),
-        require('../util/util.js'),
-        require('../droplist/droplist.js')
-    );
-}else if(typeof define == 'function'){
+if(typeof define == 'function'){
     //seajs or requirejs environment
     define(function(require, exports, module){
         return factory(
@@ -16,6 +9,13 @@ if(typeof module === 'object'){
             require('../droplist/droplist.js')
         );
     });
+}else if(typeof module === 'object'){
+    module.exports = factory(
+        require('../jquery/jquery.js'),
+        require('../class/class.js'),
+        require('../util/util.js'),
+        require('../droplist/droplist.js')
+    );
 }else{
     window.jQuery.featherUi = window.jQuery.featherUi || {};
     window.jQuery.featherUi.Calendar = factory(
