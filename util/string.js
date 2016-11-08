@@ -1,27 +1,21 @@
-;(function(window, factory){
-if(typeof define == 'function'){
+;(function(factory){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return factory(
-            require('./lib/crypto.js'),
-            require('./lib/base64.js'),
-            require('./object.js')
-        );
-    });
-}else if(typeof module === 'object'){
+    define(['./lib/crypto', './lib/base64', './object'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
-        require('./lib/crypto.js'),
-        require('./lib/base64.js'),
-        require('./object.js')
+        require('./lib/crypto'),
+        require('./lib/base64'),
+        require('./object')
     );
 }else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi.Util = window.jQuery.featherUi.Util || {};
-    window.jQuery.featherUi.Util.string = factory(CryptoJS, window, window.jQuery.featherUi.Util.object);
+    this.util = this.util || {};
+    this.util.string = factory(CryptoJS, {
+        atob: this.atob,
+        btoa: this.btoa
+    }, this.object);
 }
-})(window, function(CryptoJS, base64, object){
-
-
+})(function(CryptoJS, base64, object){
 return  {
     /**
      * 将一个string 进行左右补全

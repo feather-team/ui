@@ -1,23 +1,22 @@
-;(function(window){
-if(typeof define == 'function'){
+;(function(){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return {
-            object: require('./object.js'),
-            number: require('./number.js'),
-            string: require('./string.js'),
-            date: require('./date.js')
-        };
-    });
-}else if(typeof module === 'object'){
-    module.exports = {
-        object: require('./object.js'),
-        number: require('./number.js'),
-        string: require('./string.js'),
-        date: require('./date.js')
-    };
-}else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi.Util = window.jQuery.featherUi.Util || {};
+    define(['./object', './number', './string', './date'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
+    module.exports = factory(
+        require('./object'),
+        require('./number'),
+        require('./string'),
+        require('./date')
+    );
+}else if(typeof jQuery != 'undefined'){
+    jQuery.util = this.util;
 }
-})(window);
+})(function(Object, Number, String, Date){
+    return {
+        object: Object,
+        number: Number,
+        string: String,
+        date: Date
+    };
+});

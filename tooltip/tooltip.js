@@ -1,25 +1,14 @@
-;(function(window, factory){
-if(typeof define == 'function'){
+;(function(factory){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return factory(
-            require('../jquery/jquery.js'),
-            require('../class/class.js')
-        );
-    });
-}else if(typeof module === 'object'){
+    define(['jQuery', '../class/class'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
-        require('../jquery/jquery.js'),
-        require('../class/class.js')
-    );
-}else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi.Tooltip = factory(
-        window.jQuery || window.$, 
-        window.jQuery.featherUi.Class
+        require('jquery'),
+        require('../class/class')
     );
 }
-})(window, function($, Class){
+})(function($, Class){
 var proxy = $.proxy, doc = document;
 
 var Tooltip = Class.$factory('tooltip', {

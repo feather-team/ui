@@ -1011,18 +1011,15 @@ Uploadify v3.2.1
 Copyright (c) 2012 Reactive Apps, Ronnie Garcia
 Released under the MIT License <http://www.opensource.org/licenses/mit-license.php> 
 */
-;(function(window, factory){
-if(typeof define == 'function'){
-    //seajs or requirejs environment
-    define(function(require){
-        factory(
-            require('../../jquery/jquery.js')
-        );
-    });
+;(function(factory){
+if(typeof define == 'function' && define.amd){
+    define(['jquery'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
+    module.exports = factory(require('jquery'));
 }else{
-    factory(window.jQuery || window.$);
+    factory(window.jQuery);
 }
-})(window, function($) {
+})(function($) {
 
     // These methods can be called by adding them as the first argument in the uploadify plugin call
     var methods = {

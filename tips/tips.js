@@ -1,24 +1,17 @@
-;(function(window, factory){
-if(typeof define == 'function'){
+;(function(factory){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return factory(
-            require('../jquery/jquery.js'),
-            require('../class/class.js'),
-            require('../dialog/dialog.js')
-        );
-    });
-}else if(typeof module === 'object'){
+    define(['jQuery', '../class/class', '../dialog/dialog'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
-        require('../jquery/jquery.js'),
-        require('../class/class.js'),
-        require('../dialog/dialog.js')
+        require('jquery'),
+        require('../class/class'),
+        require('../dialog/dialog')
     );
 }else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi.Tips = factory(window.jQuery || window.$, window.jQuery.featherUi.Class, window.jQuery.featherUi.Dialog);
+    
 }
-})(window, function($, Class, Dialog){
+})(function($, Class, Dialog){
 var Tips = Class.extend('Event', {
     initialize: function(opt){
         this.options = $.extend({

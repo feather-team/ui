@@ -1,31 +1,18 @@
-;(function(window, factory){
-if(typeof define == 'function'){
+;(function(factory){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return factory(
-            require('../jquery/jquery.js'),
-            require('../class/class.js'),
-            require('../util/util.js'),
-            require('../droplist/droplist.js')
-        );
-    });
-}else if(typeof module === 'object'){
+    define(['jquery', '../class/class', '../util/util', '../droplist/droplist'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
-        require('../jquery/jquery.js'),
-        require('../class/class.js'),
-        require('../util/util.js'),
-        require('../droplist/droplist.js')
+        require('jquery'),
+        require('../class/class'),
+        require('../util/util'),
+        require('../droplist/droplist')
     );
 }else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi.Calendar = factory(
-        window.jQuery || window.$, 
-        window.jQuery.featherUi.Class,
-        window.jQuery.featherUi.Util,
-        window.jQuery.featherUi.DropList
-    );
+    factory(window.jQuery, window.jQuery.klass, window.jQuery.util, window.jQuery.fn.droplist);
 }
-})(window, function($, Class, Util, DropList){
+})(function($, Class, Util, DropList){
 
 var toPad = Util.string.toPad, doc = document;
 

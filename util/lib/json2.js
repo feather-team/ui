@@ -486,11 +486,13 @@ if (!JSON) {
     }
 }());
 
-if(typeof define == 'function'){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
     define(function(){
         return JSON;
     });
-}else if(typeof module === 'object'){
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = JSON;
+}else if(!JSON){
+    this.JSON = JSON;
 }

@@ -1,20 +1,15 @@
-;(function(window, factory){
-if(typeof define == 'function'){
+;(function(factory){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return factory(
-            require('../jquery/jquery.js')
-        );
-    });
-}else if(typeof module === 'object'){
+    define(['jquery'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
-        require('../jquery/jquery.js')
+        require('jquery')
     );
 }else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi.Class = factory(window.jQuery || window.$);
+    window.jQuery.klass = factory(window.jQuery);
 }
-})(window, function($){
+})(function($){
 var NAMESPACE = 'featherUi', NAMESPACE_EXTENSTION = NAMESPACE + '.';
 var slice = Array.prototype.slice;
 
@@ -215,6 +210,10 @@ return {
         });
         */
         $.fn[name] = function(options){
+            if(!(this instanceof $)){
+                return new klass(options);
+            }
+
             var action, args;
 
             if(typeof options == 'string'){

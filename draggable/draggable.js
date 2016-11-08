@@ -1,28 +1,17 @@
-;(function(window, factory){
-if(typeof define == 'function'){
+;(function(factory){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return factory(
-            require('../jquery/jquery.js'),
-            require('../class/class.js'),
-            require('../util/util.js')
-        );
-    });
-}else if(typeof module === 'object'){
+    define(['jquery', '../class/class', '../util/util'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
-        require('../jquery/jquery.js'),
-        require('../class/class.js'),
-        require('../util/util.js')
+        require('jquery'),
+        require('../class/class'),
+        require('../util/util')
     );
 }else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi.Draggable = factory(
-        window.jQuery || window.$, 
-        window.jQuery.featherUi.Class,
-        window.jQuery.featherUi.Util
-    );
+    factory(window.jQuery, window.jQuery.klass, window.jQuery.util);
 }
-})(window, function($, Class, Util){
+})(function($, Class, Util){
 
 var toInt = Util.number.toInt;
 

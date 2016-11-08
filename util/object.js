@@ -1,21 +1,16 @@
-;(function(window, factory){
-if(typeof define == 'function'){
+;(function(factory){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return factory(
-            require('./lib/json2.js')
-        );
-    });
-}else if(typeof module === 'object'){
+    define(['./lib/json2'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
-        require('./lib/json2.js')
+        require('./lib/json2')
     );
 }else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi.Util = window.jQuery.featherUi.Util || {};
-    window.jQuery.featherUi.Util.object = factory(window.JSON);
+    this.util = this.util || {};
+    this.util.object = factory(JSON);
 }
-})(window, function(json2){
+})(function(json2){
 
 return {
     get: function(data, name){

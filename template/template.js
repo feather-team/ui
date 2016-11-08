@@ -1,16 +1,17 @@
-;(function(window, factory){
-if(typeof define == 'function'){
+;(function(factory){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return factory();
-    });
-}else if(typeof module === 'object'){
+    define([], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory();
 }else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi.Template = factory();
+    this.template = factory();
+
+    if(typeof jQuery != 'undefined'){
+        jQuery.template = this.template;
+    }
 }
-})(window, function(){
+})(function(){
 
 return {
     REG: /(')|([\r\n]+)|<%(=?)([\s\S]*?)%>/g,

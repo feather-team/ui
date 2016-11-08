@@ -1,24 +1,17 @@
-;(function(window, factory){
-if(typeof define == 'function'){
+;(function(factory){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return factory(
-            require('../jquery/jquery.js'),
-            require('../dialog/dialog.js')
-        );
-    });
-}else if(typeof module === 'object'){
+    define(['jquery', '../dialog/dialog'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
-        require('../jquery/jquery.js'),
-        require('../dialog/dialog.js')
+        require('jquery'),
+        require('../dialog/dialog')
     );
 }else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi.Alert = factory(window.jQuery || window.$, window.jQuery.featherUi.Dialog);
+    factory(window.jQuery, window.jQuery.fn.dialog);
 }
-})(window, function($, Dialog){
-
-return {
+})(function($, Dialog){
+return $.alert = {
     alert: function(content, callback, unclose, opt){
         return new Dialog($.extend({
             title: '提示',

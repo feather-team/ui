@@ -59,14 +59,15 @@
     return output;
   });
 
-  if(typeof define == 'function'){
+  if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
     define(function(){
       return object;
     });
-  }else if(typeof module === 'object'){
+  }else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = object;
   }else{
-    object = this;
+    this.btoa = object.btoa;
+    this.atob = object.atob;
   }
 }());

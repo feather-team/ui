@@ -1,20 +1,15 @@
-;(function(window, factory){
-if(typeof define == 'function'){
+;(function(factory){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return factory(
-            require('../jquery/jquery.js')
-        );
-    });
-}else if(typeof module === 'object'){
+    define(['jquery'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
-        require('../jquery/jquery.js')
+        require('jquery')
     );
 }else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi.Cookie = factory(window.jQuery || window.$);
+    window.jQuery.cookie = factory(window.jQuery);
 }
-})(window, function($){
+})(function($){
 
 var pluses = /\+/g;
 
@@ -32,7 +27,7 @@ function read(s) {
     } catch(e) {}
 }
 
-return {
+return $.cookie = {
     config: {},
 
     set: function(key, value, options){

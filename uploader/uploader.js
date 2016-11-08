@@ -42,38 +42,24 @@ function __uri(url){
 }
 
 var prefix = currentScript.replace(/[^\/]+$/, '');
-var swfUrl = __uri("./uploader.swf", true, false).split('/').pop();
+var swfUrl = __uri("./uploader.swf").split('/').pop();
 
 window.__featherUiUploaderSwfUrl__ = prefix + swfUrl;
 })();
 
-;(function(window, factory){
-if(typeof define == 'function'){
+;(function(factory){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return factory(
-            require('../jquery/jquery.js'),
-            require('../class/class.js'),
-            require('../cookie/cookie.js'),
-            require('./lib/uploadify.js')
-        );
-    });
-}else if(typeof module === 'object'){
+    define(['jquery', '../class/class', '../cookie/cookie', './lib/uploadify'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
-        require('../jquery/jquery.js'),
-        require('../class/class.js'),
-        require('../cookie/cookie.js'),
-        require('./lib/uploadify.js')
-    );
-}else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi.Uploader = factory(
-        window.jQuery || window.$, 
-        window.jQuery.featherUi.Class,
-        window.jQuery.featherUi.Cookie
+        require('jquery'),
+        require('../class/class'),
+        require('../cookie/cookie'),
+        require('./lib/uploadify')
     );
 }
-})(window, function($, Class, Cookie){
+})(function($, Class, Cookie){
 var DATANAME = Class.NAMESPACE + '.uploader';
 
 var prototype = {

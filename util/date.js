@@ -1,21 +1,16 @@
-;(function(window, factory){
-if(typeof define == 'function'){
+;(function(factory){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return factory(
-            require('./string.js')
-        );
-    });
-}else if(typeof module === 'object'){
+    define(['./string'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
-        require('./string.js')
+        require('./string')
     );
 }else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi.Util = window.jQuery.featherUi.Util || {};
-    window.jQuery.featherUi.Util.date = factory(window.jQuery.featherUi.Util.string);
+    this.util = this.util || {};
+    this.util.date = factory(this.util.string);
 }
-})(window, function(string){
+})(function(string){
 var toPad = string.toPad;
 
 return {

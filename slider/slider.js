@@ -1,22 +1,16 @@
-;(function(window, factory){
-if(typeof define == 'function'){
+;(function(factory){
+if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
-    define(function(require, exports, module){
-        return factory(
-            require('../jquery/jquery.js'),
-            require('../class/class.js')
-        );
-    });
-}else if(typeof module === 'object'){
+    define(['jquery', '../class/class'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
-        require('../jquery/jquery.js'),
-        require('../class/class.js')
+        require('jquery'),
+        require('../class/class')
     );
 }else{
-    window.jQuery.featherUi = window.jQuery.featherUi || {};
-    window.jQuery.featherUi = factory(window.jQuery || window.$);
+    factory(window.jQuery, window.jQuery.klass);
 }
-})(window, function($, Class){
+})(function($, Class){
 var now = $.now;
 //, Draggable = require('draggable');
 var Slider = Class.$factory('slider', {
