@@ -1,4 +1,4 @@
-;(function(){
+;(function(factory){
 if(typeof define == 'function' && define.amd){
     //seajs or requirejs environment
     define(['./object', './number', './string', './date'], factory);

@@ -48,10 +48,7 @@ window.__featherUiUploaderSwfUrl__ = prefix + swfUrl;
 })();
 
 ;(function(factory){
-if(typeof define == 'function' && define.amd){
-    //seajs or requirejs environment
-    define(['jquery', '../class/class', '../cookie/cookie', './lib/uploadify'], factory);
-}else if(typeof module === 'object' && typeof module.exports == 'object'){
+if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
         require('jquery'),
         require('../class/class'),

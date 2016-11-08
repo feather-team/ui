@@ -1,8 +1,5 @@
 ;(function(factory){
-if(typeof define == 'function' && define.amd){
-    //seajs or requirejs environment
-    define(['jQuery', '../class/class', '../dialog/dialog'], factory);
-}else if(typeof module === 'object' && typeof module.exports == 'object'){
+if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
         require('jquery'),
         require('../class/class'),
