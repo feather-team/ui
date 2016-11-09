@@ -1,5 +1,8 @@
 ;(function(factory){
-if(typeof module === 'object' && typeof module.exports == 'object'){
+if(typeof define == 'function' && define.amd){
+    //seajs or requirejs environment
+    define(['jquery', '../class/class', '../util/util', '../droplist/droplist'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
         require('jquery'),
         require('../class/class'),

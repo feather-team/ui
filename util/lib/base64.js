@@ -59,7 +59,12 @@
     return output;
   });
 
-  if(typeof module === 'object' && typeof module.exports == 'object'){
+  if(typeof define == 'function' && define.amd){
+    //seajs or requirejs environment
+    define(function(){
+      return object;
+    });
+  }else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = object;
   }else{
     this.btoa = object.btoa;
