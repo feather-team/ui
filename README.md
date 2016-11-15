@@ -1,7 +1,7 @@
 feather前端模块化组件库2.0     
 =====================     
       
-###关于feather-ui##     
+###关于feather-ui
       
 feather-ui组件库是一套基于jquery/zepto的简单，轻量，且遵循暴露核心API，易扩展，且代码可读性高思想的前端ui组件库。        
       
@@ -19,14 +19,15 @@ feather-ui兼容了模块化，以及传统方式使用，如果是非模块下�
 <script>      
 var mask = new window.jQuery.fn.mask;   
 make.open();
+
+$(document.body).mask();
 </script>     
 ```       
       
 ##### feather-ui中有很多依赖的关系，建议：     
       
 * 使用模块化加载方式去解决依赖问题        
-* 使用[feather](http://github.com/feather-team/feather)等工程构建框架去解决依赖问题，而且会带来很多不一样的惊喜！！！      
-      
+* 使用[feather2](http://github.com/feather-team/feather2)等工程构建框架去解决依赖问题，而且会带来很多不一样的惊喜！！！      
       
 ###2.0和以往版本的主要区别：     
       
@@ -87,6 +88,24 @@ instance.on('sayHello', function(event, instanceSay){
 instance.trigger('sayHello', 'hello, world'); //instace say: hello, world \r\n i say: hello, world;       
 ```       
 这些插件都继承于预定义类Event，更多使用方法可查看[Event](/class)        
+
+###使用bower安装
+
+```sh
+bower install feather-ui
+```
+
+###使用feather2安装
+
+```sh
+feather2 install feather-ui
+```
+
+```js
+require.async('ui/alert', function(Alert){
+      Alert.confirm('123');
+});
+```
       
       
 ###组件列表       

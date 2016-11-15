@@ -1012,7 +1012,9 @@ Copyright (c) 2012 Reactive Apps, Ronnie Garcia
 Released under the MIT License <http://www.opensource.org/licenses/mit-license.php> 
 */
 ;(function(factory){
-if(typeof module === 'object' && typeof module.exports == 'object'){
+if(typeof define == 'function' && define.amd){
+    define(['jquery'], factory);
+}else if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(require('jquery'));
 }else{
     factory(window.jQuery);
