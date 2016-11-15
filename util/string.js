@@ -13,7 +13,7 @@ if(typeof define == 'function' && define.amd){
     this.util.string = factory(CryptoJS, {
         atob: this.atob,
         btoa: this.btoa
-    }, this.object);
+    }, this.util.object);
 }
 })(function(CryptoJS, base64, object){
 return  {
