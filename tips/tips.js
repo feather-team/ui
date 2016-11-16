@@ -9,10 +9,10 @@ if(typeof define == 'function' && define.amd){
         require('../dialog/dialog')
     );
 }else{
-    
+    factory(window.jQuery, window.jQuery.klass, window.jQuery.fn.dialog);
 }
 })(function($, Class, Dialog){
-var Tips = Class.extend('Event', {
+var Tips = $.tips = Class.extend('Event', {
     initialize: function(opt){
         this.options = $.extend({
             content: '',
