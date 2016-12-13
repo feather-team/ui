@@ -7,6 +7,8 @@ if(typeof define == 'function' && define.amd){
         require('jquery'),
         require('../class/class')
     );
+}else{
+    factory(window.jQuery, window.jQuery.klass);
 }
 })(function($, Class){
 var proxy = $.proxy, doc = document;

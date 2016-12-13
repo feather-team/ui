@@ -58,6 +58,8 @@ if(typeof define == 'function' && define.amd){
         require('../cookie/cookie'),
         require('./lib/uploadify')
     );
+}else{
+    factory(window.jQuery, window.jQuery.klass, window.jQuery.cookie, window.jQuery.fn.uploadify);
 }
 })(function($, Class, Cookie){
 var DATANAME = Class.NAMESPACE + '.uploader';
